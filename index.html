@@ -57,6 +57,21 @@
     <!-- Hero -->
     <section class="hero">
       <div class="hero-space" aria-hidden="true">
+        <span class="mega-orbit"></span>
+        <span class="mega-orbit orbit-2"></span>
+        <svg class="atmosphere" viewBox="0 0 620 420" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="atm" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+              <stop offset="0.72" stop-color="#dceaff" stop-opacity="0.6"/>
+              <stop offset="1" stop-color="#002FA7" stop-opacity="0.9"/>
+            </linearGradient>
+          </defs>
+          <path d="M620 420 A620 620 0 0 0 0 420 Z" fill="url(#atm)"/>
+          <path d="M620 420 A620 620 0 0 0 0 420 Z" stroke="#002FA7" stroke-opacity="0.5" stroke-width="1.5"/>
+          <path d="M620 420 A660 660 0 0 0 0 420 Z" stroke="#8fb4ff" stroke-opacity="0.4" stroke-width="1"/>
+        </svg>
+        <span class="hero-mesh"></span>
         <span class="star s1"></span>
         <span class="star s2"></span>
         <span class="star s3"></span>
@@ -70,13 +85,13 @@
           <span class="orbit o2"></span>
           <span class="orbit-track"><i class="orbit-dot"></i></span>
           <svg class="constellation" viewBox="0 0 200 150" fill="none">
-            <path d="M18 128 L52 36 L92 92 L138 26 L178 118" stroke="rgba(111,231,255,0.4)" stroke-width="1"/>
+            <path d="M18 128 L52 36 L92 92 L138 26 L178 118" stroke="rgba(59,111,224,0.4)" stroke-width="1"/>
             <path d="M52 36 L92 92 L138 26" stroke="rgba(99,140,255,0.25)" stroke-width="1"/>
-            <circle cx="18" cy="128" r="2.5" fill="#6fe7ff"/>
-            <circle cx="52" cy="36" r="2.5" fill="#9c8cff"/>
+            <circle cx="18" cy="128" r="2.5" fill="#3b6fe0"/>
+            <circle cx="52" cy="36" r="2.5" fill="#3168d9"/>
             <circle cx="92" cy="92" r="3" fill="#61f2b0"/>
             <circle cx="138" cy="26" r="2.5" fill="#638cff"/>
-            <circle cx="178" cy="118" r="2.5" fill="#6fe7ff"/>
+            <circle cx="178" cy="118" r="2.5" fill="#3b6fe0"/>
           </svg>
         </span>
       </div>
@@ -128,18 +143,18 @@
                 </div>
                 <div class="orbit-globe">
                   <svg viewBox="0 0 150 150" fill="none" aria-hidden="true">
-                    <circle cx="75" cy="75" r="42" stroke="rgba(111,231,255,0.4)" stroke-width="1"/>
-                    <ellipse cx="75" cy="75" rx="42" ry="16" stroke="rgba(111,231,255,0.3)" stroke-width="1"/>
-                    <ellipse cx="75" cy="75" rx="42" ry="16" stroke="rgba(111,231,255,0.3)" stroke-width="1" transform="rotate(60 75 75)"/>
-                    <ellipse cx="75" cy="75" rx="42" ry="16" stroke="rgba(111,231,255,0.3)" stroke-width="1" transform="rotate(-60 75 75)"/>
-                    <path d="M33 75h84M75 33v84" stroke="rgba(111,231,255,0.25)" stroke-width="1"/>
+                    <circle cx="75" cy="75" r="42" stroke="rgba(59,111,224,0.4)" stroke-width="1"/>
+                    <ellipse cx="75" cy="75" rx="42" ry="16" stroke="rgba(59,111,224,0.3)" stroke-width="1"/>
+                    <ellipse cx="75" cy="75" rx="42" ry="16" stroke="rgba(59,111,224,0.3)" stroke-width="1" transform="rotate(60 75 75)"/>
+                    <ellipse cx="75" cy="75" rx="42" ry="16" stroke="rgba(59,111,224,0.3)" stroke-width="1" transform="rotate(-60 75 75)"/>
+                    <path d="M33 75h84M75 33v84" stroke="rgba(59,111,224,0.25)" stroke-width="1"/>
                     <g class="globe-ring">
                       <ellipse cx="75" cy="75" rx="56" ry="20" stroke="rgba(99,140,255,0.35)" stroke-width="1" transform="rotate(-18 75 75)"/>
                     </g>
                     <g class="globe-sat">
-                      <circle cx="75" cy="19" r="2.5" fill="#6fe7ff"/>
+                      <circle cx="75" cy="19" r="2.5" fill="#3b6fe0"/>
                     </g>
-                    <path class="globe-scan" d="M75 20 A55 55 0 0 1 130 75" stroke="rgba(111,231,255,0.3)" stroke-width="1"/>
+                    <path class="globe-scan" d="M75 20 A55 55 0 0 1 130 75" stroke="rgba(59,111,224,0.3)" stroke-width="1"/>
                   </svg>
                   <span class="globe-coords tl">N 31.2°</span>
                   <span class="globe-coords br">E 121.4°</span>
@@ -152,9 +167,7 @@
                 </div>
                 <div class="code-window">
                   <div class="code-window-bar">
-                    <span class="dot-red"></span>
-                    <span class="dot-yellow"></span>
-                    <span class="dot-green"></span>
+                    <span class="term-mode">蓝图终端 // BLUEPRINT</span>
                     <em>mission.js</em>
                   </div>
                   <div class="code-window-body">

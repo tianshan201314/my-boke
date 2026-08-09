@@ -1391,10 +1391,11 @@ function initTheme() {
   } catch (err) {
     stored = null;
   }
-  root.dataset.theme = stored === 'dark' || stored === 'light' ? stored : 'dark';
+  root.dataset.theme = stored === 'dark' || stored === 'light' ? stored : 'light';
 
   const toggle = document.getElementById('theme-toggle');
   if (toggle) {
+    toggle.setAttribute('title', '切换白昼 / 深空模式');
     toggle.addEventListener('click', () => {
       const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
       root.dataset.theme = next;
@@ -1494,15 +1495,16 @@ const StarField = (() => {
     }));
   }
 
-  const rgb = () =>
-    document.documentElement.dataset.theme === 'light' ? '14, 33, 56' : '237, 248, 255';
+const rgb = () =>
+    document.documentElement.dataset.theme === 'light' ? '49, 104, 217' : '237, 248, 255';
 
   function draw() {
     if (!ctx) return;
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    const light = document.documentElement.dataset.theme !== 'dark';
     for (const s of stars) {
       s.tw += s.sp;
-      const alpha = 0.2 + Math.abs(Math.sin(s.tw)) * 0.55;
+      const alpha = light ? 0.26 : 0.2 + Math.abs(Math.sin(s.tw)) * 0.5;
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(${rgb()}, ${alpha})`;
