@@ -27,12 +27,14 @@ my_boke/
 ├── js/
 │   └── main.js         # 站点数据（POSTS 数组）+ 渲染逻辑
 ├── images/             # 封面、头像、流程图等本地资源
+├── docs/
+│   ├── AI需求文档.md    # 需求文档与验收标准
+│   └── DEPLOY.md       # 部署指南
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml  # GitHub Pages 部署工作流
-├── AI需求文档.md        # 需求文档与验收标准
-├── DEPLOY.md           # 部署指南
-└── README.md
+├── README.md
+└── .gitignore
 ```
 
 ## 本地运行
@@ -55,4 +57,4 @@ git commit -m "docs: 更新文章"
 git push
 ```
 
-详细流程见 [DEPLOY.md](DEPLOY.md)，需求与验收标准见 [AI需求文档.md](AI需求文档.md)。
+详细流程见 [docs/DEPLOY.md](docs/DEPLOY.md)，需求与验收标准见 [docs/AI需求文档.md](docs/AI需求文档.md)。
