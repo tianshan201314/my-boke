@@ -53,8 +53,25 @@
 
   <canvas id="starfield" aria-hidden="true"></canvas>
 
-  <main class="container page-layout">
-    <section class="content-main" aria-label="项目结构">
+<main>
+    <section class="page-hero">
+      <div class="container page-hero-inner">
+        <div class="page-hero-left" data-reveal>
+          <span class="section-eyebrow">06 / 系统结构 <span class="eyebrow-en">SYSTEM</span></span>
+          <h1>系统架构</h1>
+          <p class="page-subtitle">空间站系统架构控制台：文件结构、模块关系与部署链路。</p>
+          <p class="page-path">DEVLOG // 系统 / 架构控制台 · 部署状态 正常</p>
+        </div>
+        <dl class="page-hero-stats" data-reveal>
+          <div><dt>页面模块</dt><dd>08</dd></div>
+          <div><dt>核心脚本</dt><dd>01</dd></div>
+          <div><dt>样式系统</dt><dd>01</dd></div>
+          <div><dt>部署状态</dt><dd class="stat-ok"><i class="signal-dot ok"></i>正常</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <div class="container arch-main">
       <article class="article-card" data-reveal>
         <header class="article-header">
           <div class="article-eyebrow">系统架构 // SYSTEM ARCHITECTURE</div>
@@ -79,16 +96,21 @@
               <div class="topo-node">CSS / JS<small>MODULES</small></div>
             </div>
           </div>
+
           <h2>一、目录树</h2>
           <p>本站为纯前端实现（HTML + CSS + 原生 JavaScript），无框架、无构建步骤。所有源码与资源位于仓库根目录，部署配置集中在隐藏目录中。</p>
 
           <ul class="doc-tree">
             <li><span class="tree-icon">📁</span>my_boke/
               <ul>
-                <li><span class="tree-icon">📄</span>index.html <span class="note">首页</span></li>
-                <li><span class="tree-icon">📄</span>article.html <span class="note">文章详情页</span></li>
-                <li><span class="tree-icon">📄</span>about.html <span class="note">关于我</span></li>
-                <li><span class="tree-icon">📄</span>structure.html <span class="note">项目结构（当前页）</span></li>
+                <li><span class="tree-icon">📄</span>index.html <span class="note">首页 · 指挥中心</span></li>
+                <li><span class="tree-icon">📄</span>articles.html <span class="note">任务日志数据库</span></li>
+                <li><span class="tree-icon">📄</span>article.html <span class="note">日志阅读器</span></li>
+                <li><span class="tree-icon">📄</span>books.html <span class="note">知识档案库</span></li>
+                <li><span class="tree-icon">📄</span>menu.html <span class="note">轨道补给舱</span></li>
+                <li><span class="tree-icon">📄</span>links.html <span class="note">星链中继网络</span></li>
+                <li><span class="tree-icon">📄</span>structure.html <span class="note">系统架构（当前页）</span></li>
+                <li><span class="tree-icon">📄</span>about.html <span class="note">成员档案</span></li>
                 <li><span class="tree-icon">📁</span>css/
                   <ul>
                     <li><span class="tree-icon">📄</span>style.css <span class="note">全部样式</span></li>
@@ -96,7 +118,7 @@
                 </li>
                 <li><span class="tree-icon">📁</span>js/
                   <ul>
-                    <li><span class="tree-icon">📄</span>main.js <span class="note">文章数据 + 渲染 + 交互逻辑</span></li>
+                    <li><span class="tree-icon">📄</span>main.js <span class="note">数据 + 渲染 + 交互逻辑</span></li>
                   </ul>
                 </li>
                 <li><span class="tree-icon">📁</span>images/
@@ -143,10 +165,14 @@
               <tr><th>文件</th><th>职责</th></tr>
             </thead>
             <tbody>
-              <tr><td><code>index.html</code></td><td>首页：吸顶导航、文章卡片网格、侧边栏、页脚、返回顶部按钮</td></tr>
-              <tr><td><code>article.html</code></td><td>文章详情页：按 <code>?id=</code> 渲染正文、上一篇 / 下一篇导航</td></tr>
-              <tr><td><code>about.html</code></td><td>关于我：头像、自我介绍、技能标签、联系方式</td></tr>
-              <tr><td><code>structure.html</code></td><td>项目结构页（当前页）：目录树、文件职责、设计说明</td></tr>
+              <tr><td><code>index.html</code></td><td>首页 · 指挥中心：成员信息、遥测控制台、地面环境、任务日志、能力模块、最新通讯、通信频道</td></tr>
+              <tr><td><code>articles.html</code></td><td>任务日志数据库：搜索 / 分类 / 排序，最新日志与完整档案</td></tr>
+              <tr><td><code>article.html</code></td><td>日志阅读器：任务档案头、目录导航、阅读进度、任务跳转、相关日志</td></tr>
+              <tr><td><code>books.html</code></td><td>知识档案库：搜索、归档筛选、收藏持久化</td></tr>
+              <tr><td><code>menu.html</code></td><td>轨道补给舱：补给项目、清单 Manifest、移动端底部抽屉</td></tr>
+              <tr><td><code>links.html</code></td><td>星链中继网络：通信节点图与节点档案</td></tr>
+              <tr><td><code>structure.html</code></td><td>系统架构（当前页）：拓扑、目录树、职责说明</td></tr>
+              <tr><td><code>about.html</code></td><td>成员档案：身份、轨迹、能力、兴趣、通信</td></tr>
             </tbody>
           </table>
 
@@ -156,8 +182,8 @@
               <tr><th>文件</th><th>职责</th></tr>
             </thead>
             <tbody>
-              <tr><td><code>css/style.css</code></td><td>全部样式：配色变量、双栏布局、卡片网格、代码块、响应式适配</td></tr>
-              <tr><td><code>js/main.js</code></td><td>站点核心：<code>POSTS</code> 数据数组、页面渲染、分类筛选、代码复制、返回顶部</td></tr>
+              <tr><td><code>css/style.css</code></td><td>全部样式：设计令牌、HUD 组件、各页面布局、主题、响应式</td></tr>
+              <tr><td><code>js/main.js</code></td><td>站点核心：数据、渲染、交互、主题、星空、指令面板、阅读进度</td></tr>
             </tbody>
           </table>
 
@@ -170,7 +196,7 @@
               <tr><td><code>avatar.svg</code></td><td>博主头像</td></tr>
               <tr><td><code>favicon.svg</code></td><td>浏览器标签页图标</td></tr>
               <tr><td><code>diagram-cache.svg</code></td><td>文章《HTTP 缓存》流程示意图</td></tr>
-              <tr><td><code>covers/cover-1 ~ 6.svg</code></td><td>六篇文章封面，与 <code>POSTS</code> 中的 <code>cover</code> 字段对应</td></tr>
+              <tr><td><code>covers/cover-1 ~ 8.svg</code></td><td>八篇文章封面，与 <code>POSTS</code> 中的 <code>cover</code> 字段对应</td></tr>
             </tbody>
           </table>
 
@@ -201,59 +227,39 @@
 
           <h2>三、关键设计说明</h2>
           <ol>
-            <li><strong>数据模拟</strong>：文章全部存放在 <code>js/main.js</code> 的 <code>POSTS</code> 数组中，页面由 JavaScript 渲染；后续接入后端时只需替换数据源。</li>
+            <li><strong>数据模拟</strong>：文章、图书、菜单、友链、能力模块均以 JS 数组模拟，页面由 JavaScript 渲染；后续接入后端时只需替换数据源。</li>
             <li><strong>相对路径</strong>：所有本地资源引用均为相对路径，部署到 GitHub Pages 子路径下也能正常工作。</li>
             <li><strong>无外部依赖</strong>：图片与图标均为本地 SVG，页面离线可访问。</li>
-            <li><strong>组件复用</strong>：首页与文章页共用侧边栏（个人信息、分类、最新文章），由 <code>main.js</code> 统一渲染。</li>
+            <li><strong>中文优先</strong>：中文为一级信息，英文仅用于系统编号、模块代号与状态标签。</li>
             <li><strong>安全</strong>：所有动态内容渲染前经过 HTML 转义，避免 XSS。</li>
           </ol>
         </div>
       </article>
-    </section>
-
-    <aside class="sidebar" aria-label="侧边栏">
-      <section class="widget profile-card">
-        <img class="avatar" src="images/avatar.svg" alt="林默的头像">
-        <h3 class="profile-name">林默</h3>
-        <p class="profile-bio">热爱前端开发的工程师，喜欢把复杂的技术讲清楚。</p>
-        <div class="profile-links">
-          <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
-          <a href="mailto:hello@example.com">邮箱</a>
-          <a href="about.html">关于我</a>
-        </div>
-      </section>
-
-      <section class="widget">
-        <h4 class="widget-title">文章分类</h4>
-        <ul id="category-list" class="category-list"></ul>
-      </section>
-
-      <section class="widget">
-        <h4 class="widget-title">最新文章</h4>
-        <ul id="recent-list" class="recent-list"></ul>
-      </section>
-    </aside>
+    </div>
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <p class="footer-info">© 2026 DevLog · 建站于 2026 年 8 月</p>
-      <p class="footer-links">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <span class="logo-name">DEVLOG</span>
+        <span class="footer-sub">轨道开发者系统 · V2.1</span>
+      </div>
+      <nav class="footer-links" aria-label="页脚导航">
         <a href="index.html">首页</a>
         <a href="articles.html">文章</a>
         <a href="books.html">图书</a>
         <a href="menu.html">实验舱</a>
         <a href="links.html">友链</a>
         <a href="structure.html">系统结构</a>
-        <a href="about.html">关于</a>
-      </p>
-      <a class="codex-badge" href="https://openai.com/codex/" target="_blank" rel="noopener" aria-label="由 Codex 驱动">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M12 0C12.9 6.4 17.6 11.1 24 12 17.6 12.9 12.9 17.6 12 24 11.1 17.6 6.4 12.9 0 12 6.4 11.1 11.1 6.4 12 0Z"/>
-        </svg>
-        <span>由 Codex 驱动</span>
-      </a>
+        <a href="about.html">关于我</a>
+      </nav>
+      <div class="footer-status">
+        <span><i class="signal-dot ok"></i>系统在线</span>
+        <span>版本 2.1</span>
+        <span>© 2026</span>
+      </div>
     </div>
+    <p class="footer-codex">由 Codex 驱动 · 纯 HTML / CSS / JavaScript 构建 · GitHub Pages 部署</p>
   </footer>
 
   <button id="back-to-top" class="back-to-top" type="button" aria-label="返回顶部" title="返回顶部">

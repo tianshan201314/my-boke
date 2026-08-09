@@ -648,26 +648,6 @@ function initHeroParallax() {
   });
 }
 
-let tiltCard = null;
-
-function initCardTilt() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (window.matchMedia('(hover: none)').matches) return;
-
-  document.addEventListener('mousemove', (e) => {
-    const card = e.target.closest('.post-card, .book-card, .dish-card, .link-card, .weather-card');
-    if (card !== tiltCard) {
-      if (tiltCard) tiltCard.style.transform = '';
-      tiltCard = card;
-    }
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width - 0.5;
-    const py = (e.clientY - rect.top) / rect.height - 0.5;
-    card.style.transform = `perspective(900px) rotateY(${px * 8}deg) rotateX(${-py * 8}deg) translateY(-5px)`;
-  });
-}
-
 function initStatCounters() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   document.querySelectorAll('#tel-posts, #tel-books, #tel-modules').forEach((el) => {
@@ -687,7 +667,25 @@ function initStatCounters() {
 /* ---------- 图书列表页 ---------- */
 
 let bookQuery = '';
-const favoriteBooks = new Set();
+let bookFilter = 'all'; // all | archived | open
+let favoriteBooks = new Set();
+
+function loadFavorites() {
+  try {
+    const raw = localStorage.getItem('devlog-book-favorites');
+    if (raw) favoriteBooks = new Set(JSON.parse(raw));
+  } catch (err) {
+    favoriteBooks = new Set();
+  }
+}
+
+function saveFavorites() {
+  try {
+    localStorage.setItem('devlog-book-favorites', JSON.stringify([...favoriteBooks]));
+  } catch (err) {
+    // 存储不可用时降级为仅本次会话
+  }
+}
 
 function toggleFavorite(button) {
   const id = button.dataset.id;
@@ -699,6 +697,9 @@ function toggleFavorite(button) {
   const faved = favoriteBooks.has(id);
   button.classList.toggle('faved', faved);
   button.textContent = faved ? '✓ 已归档' : '加入档案';
+  saveFavorites();
+  renderBooks();
+  renderBookStats();
 }
 
 function renderBooks() {
@@ -706,16 +707,19 @@ function renderBooks() {
   if (!container) return;
 
   const query = bookQuery.trim().toLowerCase();
-  const filtered = query
-    ? BOOKS.filter((book) => book.title.toLowerCase().includes(query))
-    : BOOKS;
+  const filtered = searchBooks(query);
+  const shown = filtered.filter((book) => {
+    if (bookFilter === 'archived') return favoriteBooks.has(book.id);
+    if (bookFilter === 'open') return !favoriteBooks.has(book.id);
+    return true;
+  });
 
   if (filtered.length === 0) {
     container.innerHTML = '<div class="list-empty">没有找到匹配的图书，换个关键词试试吧。</div>';
     return;
   }
 
-  container.innerHTML = filtered.map((book, index) => `
+  container.innerHTML = shown.map((book, index) => `
     <article class="book-card">
       <div class="book-top">
         <span class="book-id">BOOK-${String(index + 1).padStart(3, '0')}</span>
@@ -726,6 +730,7 @@ function renderBooks() {
         <h3 class="book-title">${escapeHtml(book.title)}</h3>
         <p class="book-author">${escapeHtml(book.author)}</p>
         <p class="book-desc">${escapeHtml(book.desc)}</p>
+        <p class="book-state ${favoriteBooks.has(book.id) ? 'archived' : ''}"><i class="signal-dot ${favoriteBooks.has(book.id) ? 'ok' : ''}"></i>${favoriteBooks.has(book.id) ? '已归档' : '未归档'}</p>
         <div class="book-footer">
           <button class="fav-btn${favoriteBooks.has(book.id) ? ' faved' : ''}" type="button" data-id="${book.id}">
             ${favoriteBooks.has(book.id) ? '✓ 已归档' : '加入档案'}
@@ -733,6 +738,16 @@ function renderBooks() {
         </div>
       </div>
     </article>`).join('');
+}
+
+function renderBookStats() {
+  const archivedCount = [...favoriteBooks].filter((id) => BOOKS.some((b) => b.id === id)).length;
+  const total = document.getElementById('bk-total');
+  if (total) total.textContent = BOOKS.length;
+  const archived = document.getElementById('bk-archived');
+  if (archived) archived.textContent = archivedCount;
+  const open = document.getElementById('bk-open');
+  if (open) open.textContent = BOOKS.length - archivedCount;
 }
 
 /* ---------- 友情链接页 ---------- */
@@ -761,7 +776,219 @@ function renderLinks() {
   }).join('');
 }
 
-/* ---------- 在线点菜单 ---------- */
+/* ---------- 星链中继网络（友链） ---------- */
+
+function renderRelayNetwork() {
+  const wrap = document.getElementById('relay-network');
+  if (!wrap) return;
+  const cx = 380;
+  const cy = 230;
+  const r = 160;
+  const nodes = LINKS.map((link, i) => {
+    const angle = (Math.PI * 2 * i) / LINKS.length - Math.PI / 2;
+    return {
+      ...link,
+      i,
+      x: Math.round(cx + r * Math.cos(angle)),
+      y: Math.round(cy + r * Math.sin(angle)),
+      id: `NODE-${String(i + 1).padStart(3, '0')}`
+    };
+  });
+  const items = nodes
+    .map(
+      (n) => `
+        <g class="relay-item" data-i="${n.i}" tabindex="0" role="button" aria-label="节点 ${n.id} ${n.name}">
+          <line x1="${cx}" y1="${cy}" x2="${n.x}" y2="${n.y}"/>
+          <circle cx="${n.x}" cy="${n.y}" r="13"/>
+          <text class="node-letter" x="${n.x}" y="${n.y + 4}" text-anchor="middle">${escapeHtml(n.initial)}</text>
+          <text class="node-label" x="${n.x}" y="${n.y + 27}" text-anchor="middle">${escapeHtml(n.name)}</text>
+        </g>`
+    )
+    .join('');
+  wrap.innerHTML = `
+    <svg viewBox="0 0 760 460" role="img" aria-label="轨道通信节点图">
+      <circle class="relay-ring" cx="${cx}" cy="${cy}" r="${r + 22}"/>
+      <circle class="relay-ring" cx="${cx}" cy="${cy}" r="${r + 46}"/>
+      <g class="relay-center">
+        <circle cx="${cx}" cy="${cy}" r="36"/>
+        <text x="${cx}" y="${cy - 3}" text-anchor="middle">DEVLOG</text>
+        <text class="center-sub" x="${cx}" y="${cy + 13}" text-anchor="middle">个人轨道空间站</text>
+      </g>
+      ${items}
+    </svg>`;
+  wrap.dataset.nodes = JSON.stringify(nodes);
+
+  const select = (i) => {
+    document.querySelectorAll('.relay-item').forEach((g, idx) => g.classList.toggle('active', idx === i));
+    const node = nodes[i];
+    const body = document.getElementById('relay-info-body');
+    const visit = document.getElementById('relay-visit');
+    if (body && node) {
+      body.innerHTML = `
+        <div><dt>节点编号</dt><dd>${node.id}</dd></div>
+        <div><dt>网站名称</dt><dd>${escapeHtml(node.name)}</dd></div>
+        <div><dt>类型</dt><dd>${escapeHtml(node.type)}</dd></div>
+        <div><dt>域名</dt><dd>${escapeHtml(node.url.replace(/^https?:\/\//, '').replace(/\/.*$/, ''))}</dd></div>
+        <div><dt>简介</dt><dd>${escapeHtml(node.desc)}</dd></div>
+        <div><dt>通信状态</dt><dd class="stat-ok"><i class="signal-dot ok"></i>已连接</dd></div>`;
+    }
+    if (visit && node) visit.href = node.url;
+  };
+
+  wrap.addEventListener('click', (e) => {
+    const g = e.target.closest('.relay-item');
+    if (g) select(Number(g.dataset.i));
+  });
+  wrap.addEventListener('keydown', (e) => {
+    const g = e.target.closest('.relay-item');
+    if (g && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      select(Number(g.dataset.i));
+    }
+  });
+}
+
+/* ---------- 通用搜索（文章列表与指令面板共用） ---------- */
+
+function searchPosts(query) {
+  const q = (query || '').trim().toLowerCase();
+  if (!q) return [...POSTS];
+  return POSTS.filter(
+    (p) =>
+      p.title.toLowerCase().includes(q) ||
+      p.summary.toLowerCase().includes(q) ||
+      p.category.toLowerCase().includes(q) ||
+      p.tags.some((t) => t.toLowerCase().includes(q))
+  );
+}
+
+function searchBooks(query) {
+  const q = (query || '').trim().toLowerCase();
+  if (!q) return [...BOOKS];
+  return BOOKS.filter(
+    (b) => b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q) || b.desc.toLowerCase().includes(q)
+  );
+}
+
+function searchLinks(query) {
+  const q = (query || '').trim().toLowerCase();
+  if (!q) return [...LINKS];
+  return LINKS.filter(
+    (l) => l.name.toLowerCase().includes(q) || l.desc.toLowerCase().includes(q) || l.type.includes(query.trim())
+  );
+}
+
+/* ---------- 任务日志数据库（文章列表页） ---------- */
+
+const logState = { query: '', category: null, sort: 'newest' };
+
+function renderFeaturedLog(post) {
+  const wrap = document.getElementById('featured-log');
+  if (!wrap) return;
+  wrap.innerHTML = `
+    <a class="featured-log" href="article.html?id=${post.id}">
+      <div class="featured-log-cover">
+        <span class="mission-id">LOG / ${logId(post)}</span>
+        <img src="${post.cover}" alt="${escapeHtml(post.title)}" loading="lazy">
+      </div>
+      <div class="featured-log-info">
+        <span class="tag">${escapeHtml(post.category)}</span>
+        <h3>${escapeHtml(post.title)}</h3>
+        <p>${escapeHtml(post.summary)}</p>
+        <span class="featured-log-meta">${post.date.replace(/-/g, '.')} · 约 ${post.readTime} 分钟 · <i class="signal-dot ok"></i>已归档</span>
+        <span class="card-more">打开任务日志 →</span>
+      </div>
+    </a>`;
+}
+
+function renderLogRows(list) {
+  const wrap = document.getElementById('log-list');
+  if (!wrap) return;
+  wrap.innerHTML = list
+    .map(
+      (post) => `
+        <a class="log-row" href="article.html?id=${post.id}">
+          <span class="log-row-id">${logId(post)}</span>
+          <span class="log-row-main">
+            <span class="log-row-title">${escapeHtml(post.title)}</span>
+            <span class="log-row-summary">${escapeHtml(post.summary)}</span>
+            <span class="log-row-meta">${escapeHtml(post.category)} · ${post.date.replace(/-/g, '.')} · 约 ${post.readTime} 分钟 · <i class="signal-dot ok"></i>已归档</span>
+          </span>
+          <span class="log-row-open">打开 →</span>
+        </a>`
+    )
+    .join('');
+}
+
+function renderLogDatabase() {
+  let list = searchPosts(logState.query);
+  if (logState.category) list = list.filter((p) => p.category === logState.category);
+  list = sortByDateDesc(list);
+  if (logState.sort === 'oldest') list.reverse();
+
+  renderFeaturedLog(list[0]);
+  renderLogRows(list.slice(1));
+
+  const countEl = document.getElementById('log-count');
+  if (countEl) countEl.textContent = `已找到 ${list.length} 条日志`;
+  document.querySelectorAll('.sort-btn').forEach((btn) => {
+    const active = btn.dataset.sort === logState.sort;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', String(active));
+  });
+}
+
+function initLogDatabase() {
+  const catWrap = document.getElementById('log-cats');
+  if (!catWrap) return;
+
+  const cats = [...new Set(POSTS.map((p) => p.category))];
+  const chips = [
+    `<button class="sort-btn cat-btn active" type="button" data-cat="" aria-pressed="true">全部</button>`
+  ].concat(
+    cats.map(
+      (c) => `<button class="sort-btn cat-btn" type="button" data-cat="${escapeHtml(c)}" aria-pressed="false">${escapeHtml(c)}</button>`
+    )
+  );
+  catWrap.innerHTML = chips.join('');
+
+  const statTotal = document.getElementById('stat-log-total');
+  if (statTotal) statTotal.textContent = POSTS.length;
+  const statCats = document.getElementById('stat-log-cats');
+  if (statCats) statCats.textContent = cats.length;
+  const statSync = document.getElementById('stat-log-sync');
+  if (statSync) statSync.textContent = sortByDateDesc(POSTS)[0].date.slice(5).replace('-', '.');
+
+  const search = document.getElementById('log-search');
+  if (search) {
+    search.addEventListener('input', () => {
+      logState.query = search.value;
+      renderLogDatabase();
+    });
+  }
+
+  document.querySelectorAll('.sort-btn[data-sort]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      logState.sort = btn.dataset.sort;
+      renderLogDatabase();
+    });
+  });
+  catWrap.addEventListener('click', (e) => {
+    const btn = e.target.closest('.cat-btn');
+    if (!btn) return;
+    logState.category = btn.dataset.cat || null;
+    document.querySelectorAll('.cat-btn').forEach((b) => {
+      const active = b === btn;
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-pressed', String(active));
+    });
+    renderLogDatabase();
+  });
+
+  renderLogDatabase();
+}
+
+/* ---------- 轨道补给舱（实验舱） ---------- */
 
 const order = new Map();
 
@@ -769,58 +996,92 @@ function renderMenu() {
   const container = document.getElementById('menu-list');
   if (!container) return;
 
-  container.innerHTML = MENU.map((dish) => {
+  container.innerHTML = MENU.map((dish, index) => {
     const qty = order.get(dish.id) || 0;
     return `
       <article class="dish-card">
+        <span class="dish-no">补给编号 ${String(index + 1).padStart(2, '0')}</span>
         <img class="dish-img" src="images/placeholder.svg" alt="菜品图片占位" loading="lazy">
         <div class="dish-body">
           <h3 class="dish-name">${escapeHtml(dish.name)}</h3>
           <p class="dish-desc">${escapeHtml(dish.desc)}</p>
           <div class="dish-footer">
             <span class="dish-price">¥${dish.price}</span>
-            <button class="add-btn" type="button" data-id="${dish.id}">${qty ? `加入补给清单（${qty}）` : '加入补给清单'}</button>
+            ${qty > 0
+              ? `<span class="qty-control">
+                  <button class="qty-btn qty-minus" type="button" data-id="${dish.id}" aria-label="减少数量">−</button>
+                  <span class="qty-num">${qty}</span>
+                  <button class="qty-btn qty-plus" type="button" data-id="${dish.id}" aria-label="增加数量">＋</button>
+                </span>`
+              : `<button class="add-btn" type="button" data-id="${dish.id}">加入清单</button>`}
           </div>
         </div>
       </article>`;
   }).join('');
 }
 
-function renderOrder() {
-  const body = document.getElementById('order-body');
-  const wrap = document.getElementById('order-table-wrap');
-  const empty = document.getElementById('order-empty');
-  if (!body) return;
-
-  const hasItems = order.size > 0;
-  if (wrap) wrap.hidden = !hasItems;
-  if (empty) empty.hidden = hasItems;
-
-  let total = 0;
-  body.innerHTML = [...order.entries()]
+function renderManifestRows() {
+  const targets = [document.getElementById('manifest-body'), document.getElementById('sheet-body')].filter(Boolean);
+  if (!targets.length) return;
+  const rows = [...order.entries()]
     .map(([id, qty]) => {
       const dish = MENU.find((d) => d.id === id);
       if (!dish) return '';
-      const subtotal = dish.price * qty;
-      total += subtotal;
       return `
-        <tr>
-          <td>${escapeHtml(dish.name)}</td>
-          <td>¥${dish.price}</td>
-          <td>${qty}</td>
-          <td>¥${subtotal}</td>
-          <td><button class="remove-item" type="button" data-id="${id}">移除</button></td>
-        </tr>`;
+        <div class="manifest-row">
+          <span class="manifest-name">${escapeHtml(dish.name)}</span>
+          <span class="manifest-price">¥${dish.price}</span>
+          <span class="qty-control">
+            <button class="qty-btn qty-minus" type="button" data-id="${dish.id}" aria-label="减少数量">−</button>
+            <span class="qty-num">${qty}</span>
+            <button class="qty-btn qty-plus" type="button" data-id="${dish.id}" aria-label="增加数量">＋</button>
+          </span>
+          <span class="manifest-subtotal">¥${dish.price * qty}</span>
+          <button class="manifest-remove" type="button" data-id="${id}" aria-label="删除该项目">×</button>
+        </div>`;
     })
     .join('');
+  targets.forEach((el) => {
+    el.innerHTML = rows || '<p class="manifest-empty">清单为空，请选择补给项目。</p>';
+  });
+}
 
-  const totalEl = document.getElementById('order-total');
+function renderSupplyStats() {
+  const items = order.size;
+  const qty = [...order.values()].reduce((a, b) => a + b, 0);
+  let total = 0;
+  order.forEach((n, id) => {
+    const d = MENU.find((x) => x.id === id);
+    if (d) total += d.price * n;
+  });
+  const set = (id, v) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = v;
+  };
+  set('sup-total', MENU.length);
+  set('sup-items', items);
+  set('sup-qty', qty);
+  set('sup-cost', '¥' + total);
+  set('m-items', items);
+  set('m-qty', qty);
+  set('m-cost', '¥' + total);
+  const totalEl = document.getElementById('manifest-total');
   if (totalEl) totalEl.textContent = '¥' + total;
+  const sheetTotal = document.getElementById('sheet-total');
+  if (sheetTotal) sheetTotal.textContent = '¥' + total;
+  const bar = document.getElementById('supply-bar-label');
+  if (bar) bar.textContent = `补给清单 · ${items} 项 · ¥${total}`;
+  const status = document.getElementById('sup-status');
+  if (status) {
+    status.textContent = items ? '● 配置中' : '● 等待配置';
+    status.classList.toggle('configuring', items > 0);
+  }
 }
 
 function updateOrder() {
   renderMenu();
-  renderOrder();
+  renderManifestRows();
+  renderSupplyStats();
 }
 
 /* ---------- 文章详情页 ---------- */
@@ -883,34 +1144,119 @@ function renderArticlePage() {
   const index = sorted.findIndex((item) => item.id === post.id);
   const prev = sorted[index + 1];
   const next = sorted[index - 1];
+  const related = buildRelated(post);
 
-  const navHtml = `
-    <nav class="post-nav" aria-label="上一篇下一篇">
-      ${prev ? `<a class="prev" href="article.html?id=${prev.id}"><span class="nav-label">上一篇</span><span class="nav-title">${escapeHtml(prev.title)}</span></a>` : '<span></span>'}
-      ${next ? `<a class="next" href="article.html?id=${next.id}"><span class="nav-label">下一篇</span><span class="nav-title">${escapeHtml(next.title)}</span></a>` : ''}
+  const jumpHtml = `
+    <nav class="log-jump" aria-label="任务跳转">
+      ${prev ? `<a class="jump prev" href="article.html?id=${prev.id}"><span class="jump-label">上一份日志</span><span class="jump-id">LOG / ${logId(prev)}</span><span class="jump-title">${escapeHtml(prev.title)}</span></a>` : '<span></span>'}
+      ${next ? `<a class="jump next" href="article.html?id=${next.id}"><span class="jump-label">下一份日志</span><span class="jump-id">LOG / ${logId(next)}</span><span class="jump-title">${escapeHtml(next.title)}</span></a>` : ''}
     </nav>`;
 
+  const relatedHtml = `
+    <section class="related-logs">
+      <h2>相关任务日志 <span class="hud-label">RELATED</span></h2>
+      <div class="related-grid">
+        ${related.map((p) => `
+          <a class="related-card" href="article.html?id=${p.id}">
+            <span class="mission-id">LOG / ${logId(p)}</span>
+            <span class="related-title">${escapeHtml(p.title)}</span>
+            <span class="related-meta">${escapeHtml(p.category)} · ${p.date.replace(/-/g, '.')}</span>
+          </a>`).join('')}
+      </div>
+    </section>`;
+
   container.innerHTML = `
-    <article class="article-card" data-reveal>
-      <header class="article-header">
-        <div class="article-eyebrow">任务日志 / ${logId(post)}</div>
-        <h1>${escapeHtml(post.title)}</h1>
-        <div class="article-data">
-          <div class="data-item"><span class="telemetry-label">作者</span><span class="telemetry-value">${escapeHtml(SITE.author)}</span></div>
-          <div class="data-item"><span class="telemetry-label">日期</span><span class="telemetry-value">${post.date.replace(/-/g, '.')}</span></div>
-          <div class="data-item"><span class="telemetry-label">分类</span><span class="telemetry-value">${escapeHtml(post.category)}</span></div>
-          <div class="data-item"><span class="telemetry-label">阅读时间</span><span class="telemetry-value">约 ${post.readTime} 分钟</span></div>
-          <div class="data-item"><span class="telemetry-label">状态</span><span class="telemetry-value">已归档</span></div>
+    <article class="reader" data-reveal>
+      <header class="reader-header">
+        <div class="reader-head-left">
+          <div class="article-eyebrow">任务日志 / ${logId(post)}</div>
+          <h1>${escapeHtml(post.title)}</h1>
+          <p class="reader-summary">${escapeHtml(post.summary)}</p>
+          <div class="reader-tags">${post.tags.map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>
         </div>
+        <dl class="reader-data">
+          <div><dt>作者</dt><dd>${escapeHtml(SITE.author)}</dd></div>
+          <div><dt>记录时间</dt><dd>${post.date.replace(/-/g, '.')}</dd></div>
+          <div><dt>分类</dt><dd>${escapeHtml(post.category)}</dd></div>
+          <div><dt>预计阅读</dt><dd>${post.readTime} 分钟</dd></div>
+          <div><dt>状态</dt><dd class="stat-ok"><i class="signal-dot ok"></i>已归档</dd></div>
+        </dl>
       </header>
-      <div class="article-cover">
-        <img src="${post.cover}" alt="${escapeHtml(post.title)}">
+      <figure class="reader-cover">
+        <img src="${post.cover}" alt="${escapeHtml(post.title)}" loading="lazy">
+        <figcaption aria-hidden="true">
+          <span class="mission-id">${logId(post)}</span>
+          <span class="cover-coords">N 31.2° · E 121.4°</span>
+        </figcaption>
+      </figure>
+      <div class="reader-layout">
+        <div class="reader-body" id="reader-body">${renderBlocks(post.content)}</div>
+        <aside class="reader-toc" id="reader-toc" aria-label="本日志目录">
+          <button class="toc-toggle" id="toc-toggle" type="button" aria-expanded="false">本文目录</button>
+          <nav>
+            <h3>本日志目录</h3>
+            <ol id="toc-list"></ol>
+            <div class="toc-progress"><span>阅读进度</span><b id="log-progress">0%</b></div>
+          </nav>
+        </aside>
       </div>
-      <div class="article-body">
-        ${renderBlocks(post.content)}
-      </div>
-      ${navHtml}
+      ${jumpHtml}
+      ${relatedHtml}
     </article>`;
+
+  buildToc();
+  initTocSpy();
+}
+
+function buildRelated(post) {
+  const same = POSTS.filter((p) => p.id !== post.id && p.category === post.category);
+  const rest = sortByDateDesc(POSTS.filter((p) => p.id !== post.id && p.category !== post.category));
+  return [...same, ...rest].slice(0, 3);
+}
+
+function buildToc() {
+  const list = document.getElementById('toc-list');
+  const body = document.getElementById('reader-body');
+  if (!list || !body) return;
+  const headings = [...body.querySelectorAll('h2, h3')];
+  list.innerHTML = headings
+    .map((h, i) => {
+      h.id = 'toc-' + i;
+      const num = String(i + 1).padStart(2, '0');
+      return `<li class="${h.tagName === 'H3' ? 'toc-h3' : ''}"><a href="#toc-${i}"><span class="toc-num">${num}</span>${escapeHtml(h.textContent)}</a></li>`;
+    })
+    .join('');
+}
+
+function initTocSpy() {
+  const body = document.getElementById('reader-body');
+  const toc = document.getElementById('reader-toc');
+  if (!body || !toc) return;
+  const links = [...document.querySelectorAll('#toc-list a')];
+  const headings = [...body.querySelectorAll('h2, h3')];
+  const progress = document.getElementById('log-progress');
+
+  const update = () => {
+    const pos = window.scrollY + 96;
+    let current = -1;
+    headings.forEach((h, i) => {
+      if (h.getBoundingClientRect().top + window.scrollY <= pos) current = i;
+    });
+    links.forEach((a, i) => a.classList.toggle('active', i === current));
+    const top = body.getBoundingClientRect().top + window.scrollY;
+    const p = Math.min(Math.max(((window.scrollY - top) / Math.max(body.offsetHeight - window.innerHeight, 1)) * 100, 0), 100);
+    if (progress) progress.textContent = Math.round(p) + '%';
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+
+  const toggle = document.getElementById('toc-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const open = toc.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+  }
 }
 
 /* ---------- 代码复制 ---------- */
@@ -953,12 +1299,30 @@ document.addEventListener('click', (event) => {
   const addButton = event.target.closest('.add-btn');
   if (addButton) {
     const id = addButton.dataset.id;
+    order.set(id, 1);
+    updateOrder();
+    return;
+  }
+
+  const plusButton = event.target.closest('.qty-plus');
+  if (plusButton) {
+    const id = plusButton.dataset.id;
     order.set(id, (order.get(id) || 0) + 1);
     updateOrder();
     return;
   }
 
-  const removeButton = event.target.closest('.remove-item');
+  const minusButton = event.target.closest('.qty-minus');
+  if (minusButton) {
+    const id = minusButton.dataset.id;
+    const next = (order.get(id) || 0) - 1;
+    if (next <= 0) order.delete(id);
+    else order.set(id, next);
+    updateOrder();
+    return;
+  }
+
+  const removeButton = event.target.closest('.manifest-remove, .remove-item');
   if (removeButton) {
     order.delete(removeButton.dataset.id);
     updateOrder();
@@ -970,9 +1334,8 @@ document.addEventListener('click', (event) => {
     updateOrder();
   }
 
-  if (event.target.closest('#submit-order')) {
+  if (event.target.closest('#submit-order, #submit-order-sheet')) {
     const toast = document.getElementById('order-toast');
-    if (!toast) return;
     const items = [...order.entries()];
     let total = 0;
     items.forEach(([id, qty]) => {
@@ -980,18 +1343,43 @@ document.addEventListener('click', (event) => {
       if (dish) total += dish.price * qty;
     });
     const count = items.reduce((sum, [, qty]) => sum + qty, 0);
-    toast.textContent = items.length
-      ? `补给确认成功！共 ${count} 份补给项目，合计 ¥${total}`
-      : '请先添加补给项目，再确认补给';
-    toast.hidden = false;
-    requestAnimationFrame(() => toast.classList.add('show'));
-    clearTimeout(toast._timer);
-    toast._timer = setTimeout(() => {
-      toast.classList.remove('show');
-      setTimeout(() => { toast.hidden = true; }, 350);
+    if (!items.length) {
+      if (toast) showToast('请先添加补给项目，再确认补给');
+      return;
+    }
+    const status = document.getElementById('sup-status');
+    if (status) status.textContent = '● 补给已确认';
+    showToast(`补给确认成功！共 ${count} 份补给项目，合计 ¥${total}`);
+    setTimeout(() => {
+      if (status && order.size) status.textContent = '● 配置中';
     }, 2600);
+    const sheet = document.getElementById('supply-sheet');
+    if (sheet && sheet.open) sheet.close();
+  }
+
+  if (event.target.closest('#supply-bar-open')) {
+    const sheet = document.getElementById('supply-sheet');
+    if (sheet && typeof sheet.showModal === 'function') sheet.showModal();
+  }
+
+  if (event.target.closest('#sheet-close')) {
+    const sheet = document.getElementById('supply-sheet');
+    if (sheet) sheet.close();
   }
 });
+
+function showToast(text) {
+  const toast = document.getElementById('order-toast');
+  if (!toast) return;
+  toast.textContent = text;
+  toast.hidden = false;
+  requestAnimationFrame(() => toast.classList.add('show'));
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => { toast.hidden = true; }, 350);
+  }, 2600);
+}
 
 /* ---------- 主题切换（白 / 黑） ---------- */
 
@@ -1204,9 +1592,9 @@ function initCommandPalette() {
     const pages = pageItems.filter(
       (p) => !q || p.zh.includes(input.value.trim()) || p.en.toLowerCase().includes(q)
     );
-    const posts = q
-      ? POSTS.filter((p) => p.title.toLowerCase().includes(q) || p.category.includes(input.value.trim())).slice(0, 6)
-      : POSTS.slice(0, 5);
+    const posts = q ? searchPosts(q).slice(0, 5) : sortByDateDesc(POSTS).slice(0, 3);
+    const books = q ? searchBooks(q).slice(0, 4) : [];
+    const links = q ? searchLinks(q).slice(0, 4) : [];
     const html = [];
     if (pages.length) {
       html.push('<div class="palette-section">页面 // PAGES</div>');
@@ -1215,6 +1603,14 @@ function initCommandPalette() {
     if (posts.length) {
       html.push('<div class="palette-section">任务日志 // LOGS</div>');
       posts.forEach((p) => html.push(itemHtml(p.title, 'LOG / ' + logId(p), 'article.html?id=' + p.id)));
+    }
+    if (books.length) {
+      html.push('<div class="palette-section">知识档案 // ARCHIVE</div>');
+      books.forEach((b, i) => html.push(itemHtml(b.title, 'BOOK-00' + (i + 1), 'books.html')));
+    }
+    if (links.length) {
+      html.push('<div class="palette-section">通信节点 // RELAY</div>');
+      links.forEach((l, i) => html.push(itemHtml(l.name, 'NODE-00' + (i + 1), l.url)));
     }
     html.push('<div class="palette-section">指令 // COMMANDS</div>');
     html.push(itemHtml('切换主题', 'TOGGLE THEME', null, 'theme'));
@@ -1293,7 +1689,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initChrome();
   StarField.start();
   initCommandPalette();
-  renderSidebar();
 
   const header = document.querySelector('.site-header');
   const backToTop = document.getElementById('back-to-top');
@@ -1327,10 +1722,11 @@ document.addEventListener('DOMContentLoaded', () => {
     initStatCounters();
   }
   if (page === 'articles') {
-    applyCategoryFilter();
-    window.addEventListener('hashchange', applyCategoryFilter);
+    initLogDatabase();
   }
   if (page === 'books') {
+    loadFavorites();
+    renderBookStats();
     renderBooks();
     const searchInput = document.getElementById('book-search');
     if (searchInput) {
@@ -1339,13 +1735,30 @@ document.addEventListener('DOMContentLoaded', () => {
         renderBooks();
       });
     }
+    const filterWrap = document.getElementById('book-filters');
+    if (filterWrap) {
+      filterWrap.addEventListener('click', (e) => {
+        const btn = e.target.closest('.book-filter');
+        if (!btn) return;
+        bookFilter = btn.dataset.filter;
+        document.querySelectorAll('.book-filter').forEach((b) => {
+          const active = b === btn;
+          b.classList.toggle('active', active);
+          b.setAttribute('aria-pressed', String(active));
+        });
+        renderBooks();
+      });
+    }
   }
   if (page === 'links') {
     renderLinks();
+    renderRelayNetwork();
+    const rlTotal = document.getElementById('rl-total');
+    if (rlTotal) rlTotal.textContent = LINKS.length;
   }
   if (page === 'menu') {
     renderMenu();
-    renderOrder();
+    updateOrder();
   }
   if (page === 'article') {
     renderArticlePage();
