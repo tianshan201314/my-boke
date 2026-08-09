@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="DevLog 技术博客文章详情。">
-  <title>文章 - DevLog</title>
+  <meta name="description" content="美味小厨在线点菜单：挑选菜品，加入订单。">
+  <title>在线点菜单 - 美味小厨</title>
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-page="article">
+<body data-page="menu">
 
   <header class="site-header">
     <div class="container header-inner">
@@ -20,40 +20,53 @@
         <a href="index.html" class="nav-link">首页</a>
         <a href="articles.html" class="nav-link">文章</a>
         <a href="books.html" class="nav-link">图书</a>
-        <a href="menu.html" class="nav-link">菜单</a>
+        <a href="menu.html" class="nav-link active">菜单</a>
         <a href="structure.html" class="nav-link">结构</a>
         <a href="about.html" class="nav-link">关于</a>
       </nav>
     </div>
   </header>
 
-  <main class="container page-layout">
-    <!-- 左侧：文章正文 -->
-    <section class="content-main" id="post-content" aria-label="文章内容"></section>
+  <main>
+    <section class="title-bar">
+      <div class="container">
+        <h1>美味小厨</h1>
+        <p class="title-bar-sub">在线点菜单 · 挑选喜欢的菜品加入订单</p>
+      </div>
+    </section>
 
-    <!-- 右侧：侧边栏 -->
-    <aside class="sidebar" aria-label="侧边栏">
-      <section class="widget profile-card">
-        <img class="avatar" src="images/avatar.svg" alt="林默的头像">
-        <h3 class="profile-name">林默</h3>
-        <p class="profile-bio">热爱前端开发的工程师，喜欢把复杂的技术讲清楚。</p>
-        <div class="profile-links">
-          <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
-          <a href="mailto:hello@example.com">邮箱</a>
-          <a href="about.html">关于我</a>
+    <div class="container menu-main">
+      <div id="menu-list" class="dish-grid"></div>
+
+      <section class="order-section">
+        <div class="order-head">
+          <h2>我的订单</h2>
+          <button id="clear-order" class="btn btn-ghost" type="button">清空订单</button>
+        </div>
+        <div id="order-empty" class="order-empty">还没有点菜，点击菜品卡片上的"加入订单"开始点餐。</div>
+        <div id="order-table-wrap" class="order-table-wrap" hidden>
+          <table class="order-table">
+            <thead>
+              <tr>
+                <th>菜品</th>
+                <th>单价</th>
+                <th>数量</th>
+                <th>小计</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="order-body"></tbody>
+            <tfoot>
+              <tr class="order-total-row">
+                <td colspan="3">总价</td>
+                <td id="order-total" class="order-total">¥0</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
         </div>
       </section>
-
-      <section class="widget">
-        <h4 class="widget-title">文章分类</h4>
-        <ul id="category-list" class="category-list"></ul>
-      </section>
-
-      <section class="widget">
-        <h4 class="widget-title">最新文章</h4>
-        <ul id="recent-list" class="recent-list"></ul>
-      </section>
-    </aside>
+    </div>
   </main>
 
   <footer class="site-footer">

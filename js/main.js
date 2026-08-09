@@ -251,6 +251,19 @@ const BOOKS = [
   }
 ];
 
+/* ---------- 模拟菜单数据（在线点菜单页） ---------- */
+
+const MENU = [
+  { id: 'gongbao-jiding', name: '宫保鸡丁', price: 28, desc: '经典川菜，鸡丁嫩滑，花生香脆，微辣下饭。', emoji: '🥘' },
+  { id: 'yuxiang-rous', name: '鱼香肉丝', price: 26, desc: '咸甜酸辣兼备，肉丝配木耳笋丝，超级下饭。', emoji: '🥢' },
+  { id: 'mapo-doufu', name: '麻婆豆腐', price: 22, desc: '麻辣鲜香，嫩豆腐配上肉末与豆瓣酱。', emoji: '🌶️' },
+  { id: 'tangcu-liji', name: '糖醋里脊', price: 32, desc: '外酥里嫩，酸甜适口，大人小孩都爱。', emoji: '🍖' },
+  { id: 'qingchao-shishu', name: '清炒时蔬', price: 18, desc: '当季蔬菜，清淡爽口，解腻首选。', emoji: '🥬' },
+  { id: 'suanla-tudousi', name: '酸辣土豆丝', price: 16, desc: '酸辣开胃，土豆丝爽脆，下饭神器。', emoji: '🥔' },
+  { id: 'fanqie-dantang', name: '番茄鸡蛋汤', price: 12, desc: '家常味道，番茄酸甜，鸡蛋滑嫩。', emoji: '🍅' },
+  { id: 'yangzhou-chaofan', name: '扬州炒饭', price: 20, desc: '粒粒分明，虾仁、火腿、鸡蛋配料丰富。', emoji: '🍚' }
+];
+
 /* ---------- 工具函数 ---------- */
 
 function escapeHtml(str) {
@@ -455,6 +468,68 @@ function renderBooks() {
     </article>`).join('');
 }
 
+/* ---------- 在线点菜单 ---------- */
+
+const order = new Map();
+
+function renderMenu() {
+  const container = document.getElementById('menu-list');
+  if (!container) return;
+
+  container.innerHTML = MENU.map((dish, index) => {
+    const qty = order.get(dish.id) || 0;
+    return `
+      <article class="dish-card">
+        <div class="dish-cover dish-cover-${(index % 4) + 1}"><span class="dish-emoji">${dish.emoji}</span></div>
+        <div class="dish-body">
+          <h3 class="dish-name">${escapeHtml(dish.name)}</h3>
+          <p class="dish-desc">${escapeHtml(dish.desc)}</p>
+          <div class="dish-footer">
+            <span class="dish-price">¥${dish.price}</span>
+            <button class="add-btn" type="button" data-id="${dish.id}">${qty ? `加入订单（${qty}）` : '加入订单'}</button>
+          </div>
+        </div>
+      </article>`;
+  }).join('');
+}
+
+function renderOrder() {
+  const body = document.getElementById('order-body');
+  const wrap = document.getElementById('order-table-wrap');
+  const empty = document.getElementById('order-empty');
+  if (!body) return;
+
+  const hasItems = order.size > 0;
+  if (wrap) wrap.hidden = !hasItems;
+  if (empty) empty.hidden = hasItems;
+
+  let total = 0;
+  body.innerHTML = [...order.entries()]
+    .map(([id, qty]) => {
+      const dish = MENU.find((d) => d.id === id);
+      if (!dish) return '';
+      const subtotal = dish.price * qty;
+      total += subtotal;
+      return `
+        <tr>
+          <td>${dish.emoji} ${escapeHtml(dish.name)}</td>
+          <td>¥${dish.price}</td>
+          <td>${qty}</td>
+          <td>¥${subtotal}</td>
+          <td><button class="remove-item" type="button" data-id="${id}">移除</button></td>
+        </tr>`;
+    })
+    .join('');
+
+  const totalEl = document.getElementById('order-total');
+  if (totalEl) totalEl.textContent = '¥' + total;
+}
+
+function updateOrder() {
+  renderMenu();
+  renderOrder();
+}
+
 /* ---------- 文章详情页 ---------- */
 
 function renderBlocks(blocks) {
@@ -585,6 +660,26 @@ document.addEventListener('click', (event) => {
 
   const favButton = event.target.closest('.fav-btn');
   if (favButton) toggleFavorite(favButton);
+
+  const addButton = event.target.closest('.add-btn');
+  if (addButton) {
+    const id = addButton.dataset.id;
+    order.set(id, (order.get(id) || 0) + 1);
+    updateOrder();
+    return;
+  }
+
+  const removeButton = event.target.closest('.remove-item');
+  if (removeButton) {
+    order.delete(removeButton.dataset.id);
+    updateOrder();
+    return;
+  }
+
+  if (event.target.closest('#clear-order')) {
+    order.clear();
+    updateOrder();
+  }
 });
 
 /* ---------- 初始化 ---------- */
@@ -628,6 +723,10 @@ document.addEventListener('DOMContentLoaded', () => {
         renderBooks();
       });
     }
+  }
+  if (page === 'menu') {
+    renderMenu();
+    renderOrder();
   }
   if (page === 'article') {
     renderArticlePage();
