@@ -3,36 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="DevLog 个人技术博客：写代码，也写点技术笔记。">
-  <title>DevLog - 个人技术博客</title>
+  <meta name="description" content="林默的个人开发者数字空间站：记录代码，也记录每一次技术探索。">
+  <title>DEVLOG // 轨道开发者系统</title>
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-page="home">
 
   <header class="site-header">
-    <div class="container header-inner">
-      <a class="logo" href="index.html">
-        <span class="logo-mark">&lt;/&gt;</span>
-        <span class="logo-name">DevLog</span>
-      </a>
-      <div class="header-right">
-        <nav class="main-nav" aria-label="主导航">
-        <a href="index.html" class="nav-link active">首页</a>
-        <a href="articles.html" class="nav-link">文章</a>
-        <a href="books.html" class="nav-link">图书</a>
-        <a href="menu.html" class="nav-link">菜单</a>
-        <a href="links.html" class="nav-link">友链</a>
-        <a href="structure.html" class="nav-link">结构</a>
-        <a href="about.html" class="nav-link">关于</a>
-        </nav>
-        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换主题">
-          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M19.4 4.6l-1.8 1.8M6.4 17.6l-1.8 1.8"/></svg>
-        </button>
+    <div class="container">
+      <div class="header-top">
+        <a class="logo" href="index.html">
+          <span class="logo-mark">&lt;/&gt;</span>
+          <span class="logo-text">
+            <span class="logo-name">DEVLOG</span>
+            <span class="logo-sub">轨道开发者系统</span>
+          </span>
+        </a>
+        <div class="header-right">
+          <nav class="main-nav" aria-label="主导航">
+            <a href="index.html" class="nav-link active">首页<span class="nav-en">COMMAND</span></a>
+            <a href="articles.html" class="nav-link">文章<span class="nav-en">LOGS</span></a>
+            <a href="books.html" class="nav-link">图书<span class="nav-en">ARCHIVE</span></a>
+            <a href="menu.html" class="nav-link">实验舱<span class="nav-en">LAB</span></a>
+            <a href="links.html" class="nav-link">友链<span class="nav-en">RELAY</span></a>
+            <a href="structure.html" class="nav-link">系统结构<span class="nav-en">SYSTEM</span></a>
+            <a href="about.html" class="nav-link">关于我<span class="nav-en">PROFILE</span></a>
+          </nav>
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换主题">
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M19.4 4.6l-1.8 1.8M6.4 17.6l-1.8 1.8"/></svg>
+          </button>
+          <button id="nav-toggle" class="nav-toggle" type="button" aria-label="打开菜单" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+        </div>
       </div>
+      <div class="status-bar" aria-label="系统状态">
+        <span class="status-item"><i class="signal-dot ok"></i><span class="status-ok">系统在线</span></span>
+        <span class="status-item hide-mobile">轨道通信正常</span>
+        <span class="status-item hide-mobile">信号 100%</span>
+        <span class="status-item hide-mobile">版本 2.0</span>
+        <span class="status-item" id="status-clock"></span>
+        <span class="status-item" id="status-clock-short"></span>
+      </div>
+      <nav class="mobile-menu" id="mobile-menu" aria-label="移动端导航"></nav>
     </div>
   </header>
+
+  <canvas id="starfield" aria-hidden="true"></canvas>
 
   <main>
     <!-- Hero -->
@@ -51,47 +70,117 @@
           <span class="orbit o2"></span>
           <span class="orbit-track"><i class="orbit-dot"></i></span>
           <svg class="constellation" viewBox="0 0 200 150" fill="none">
-            <path d="M18 128 L52 36 L92 92 L138 26 L178 118" stroke="rgba(125,211,252,0.45)" stroke-width="1"/>
-            <path d="M52 36 L92 92 L138 26" stroke="rgba(165,180,252,0.28)" stroke-width="1"/>
-            <circle cx="18" cy="128" r="2.5" fill="#7dd3fc"/>
-            <circle cx="52" cy="36" r="2.5" fill="#a5b4fc"/>
-            <circle cx="92" cy="92" r="3" fill="#67e8f9"/>
-            <circle cx="138" cy="26" r="2.5" fill="#c4b5fd"/>
-            <circle cx="178" cy="118" r="2.5" fill="#7dd3fc"/>
+            <path d="M18 128 L52 36 L92 92 L138 26 L178 118" stroke="rgba(111,231,255,0.4)" stroke-width="1"/>
+            <path d="M52 36 L92 92 L138 26" stroke="rgba(99,140,255,0.25)" stroke-width="1"/>
+            <circle cx="18" cy="128" r="2.5" fill="#6fe7ff"/>
+            <circle cx="52" cy="36" r="2.5" fill="#9c8cff"/>
+            <circle cx="92" cy="92" r="3" fill="#61f2b0"/>
+            <circle cx="138" cy="26" r="2.5" fill="#638cff"/>
+            <circle cx="178" cy="118" r="2.5" fill="#6fe7ff"/>
           </svg>
         </span>
       </div>
+
       <div class="container hero-inner">
         <div class="hero-text">
-          <img class="hero-avatar" src="images/avatar.svg" alt="林默的头像">
-          <span class="hero-eyebrow">DEVLOG // SYSTEM</span>
-          <h1>你好，我是林默</h1>
-          <p class="hero-lead">写代码，也写点技术笔记</p>
-          <p class="hero-desc">一个热爱前端开发的工程师。在这里分享 JavaScript、前端工程化与性能优化的思考与踩坑记录，也聊聊书单、天气和生活的碎片，把复杂的技术讲清楚。</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="articles.html">查看文章</a>
-            <a class="btn btn-ghost" href="about.html">关于我</a>
+          <span class="hero-eyebrow">成员编号 / LM-01</span>
+          <h1>林默</h1>
+          <p class="hero-name-en">LIN MO</p>
+          <p class="hero-role">
+            <span>前端工程师 <span class="role-en">FRONT-END ENGINEER</span></span>
+            <span>技术写作者 <span class="role-en">TECHNICAL WRITER</span></span>
+          </p>
+          <p class="hero-slogan">构建 Web，也记录抵达更远地方的方法。</p>
+          <p class="hero-desc">一个在轨道上写代码的工程师。在这里记录前端工程、JavaScript、性能优化与长期思考，也聊聊书单与日常。把复杂的技术讲清楚，是我的工作方式。</p>
+          <div class="hero-status">
+            <div class="data-line"><span class="telemetry-label"><i class="signal-dot ok"></i>当前状态</span><span class="telemetry-value">在线</span></div>
+            <div class="data-line"><span class="telemetry-label">任务</span><span class="telemetry-value">个人技术记录</span></div>
+            <div class="data-line"><span class="telemetry-label">基地</span><span class="telemetry-value">地球</span></div>
+            <div class="data-line"><span class="telemetry-label">系统</span><span class="telemetry-value">正常</span></div>
           </div>
-          <div class="hero-stats">
-            <div class="hero-stat"><b id="stat-posts">6</b><span>篇文章</span></div>
-            <div class="hero-stat"><b id="stat-cats">4</b><span>个分类</span></div>
-            <div class="hero-stat"><b>2026</b><span>建站年份</span></div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="articles.html">浏览任务日志<span class="btn-en">EXPLORE LOGS</span></a>
+            <a class="btn btn-ghost" href="about.html">关于我<span class="btn-en">CREW PROFILE</span></a>
           </div>
         </div>
-        <div class="hero-visual" aria-hidden="true">
-          <div class="code-window">
-            <div class="code-window-bar">
-              <span class="dot-red"></span>
-              <span class="dot-yellow"></span>
-              <span class="dot-green"></span>
-              <em>hello.js</em>
+
+        <div class="hero-visual">
+          <section class="telemetry-console" aria-label="轨道遥测控制台">
+            <div class="console-head">
+              <span class="console-title">ORBITAL TELEMETRY // 轨道遥测</span>
+              <span class="console-status"><i class="signal-dot ok"></i>运行中</span>
             </div>
-            <div class="code-window-body">
-              <div id="code-lines"></div>
-              <span class="cursor"></span>
+            <div class="console-body">
+              <div class="console-module">
+                <div class="module-head">
+                  <span class="hud-title">系统核心</span>
+                  <span class="hud-label">CORE</span>
+                </div>
+                <div class="data-line"><span class="telemetry-label">系统状态</span><span class="telemetry-value">正常</span></div>
+                <div class="data-line"><span class="telemetry-label">网络状态</span><span class="telemetry-value">在线</span></div>
+                <div class="data-line"><span class="telemetry-label">轨道通信</span><span class="telemetry-value">稳定</span></div>
+                <div class="data-line"><span class="telemetry-label">数据同步</span><span class="telemetry-value">正常</span></div>
+              </div>
+              <div class="console-module">
+                <div class="module-head">
+                  <span class="hud-title">轨道球</span>
+                  <span class="hud-label">ORBIT</span>
+                </div>
+                <div class="orbit-globe">
+                  <svg viewBox="0 0 150 150" fill="none" aria-hidden="true">
+                    <circle cx="75" cy="75" r="42" stroke="rgba(111,231,255,0.4)" stroke-width="1"/>
+                    <ellipse cx="75" cy="75" rx="42" ry="16" stroke="rgba(111,231,255,0.3)" stroke-width="1"/>
+                    <ellipse cx="75" cy="75" rx="42" ry="16" stroke="rgba(111,231,255,0.3)" stroke-width="1" transform="rotate(60 75 75)"/>
+                    <ellipse cx="75" cy="75" rx="42" ry="16" stroke="rgba(111,231,255,0.3)" stroke-width="1" transform="rotate(-60 75 75)"/>
+                    <path d="M33 75h84M75 33v84" stroke="rgba(111,231,255,0.25)" stroke-width="1"/>
+                    <g class="globe-ring">
+                      <ellipse cx="75" cy="75" rx="56" ry="20" stroke="rgba(99,140,255,0.35)" stroke-width="1" transform="rotate(-18 75 75)"/>
+                    </g>
+                    <g class="globe-sat">
+                      <circle cx="75" cy="19" r="2.5" fill="#6fe7ff"/>
+                    </g>
+                    <path class="globe-scan" d="M75 20 A55 55 0 0 1 130 75" stroke="rgba(111,231,255,0.3)" stroke-width="1"/>
+                  </svg>
+                  <span class="globe-coords tl">N 31.2°</span>
+                  <span class="globe-coords br">E 121.4°</span>
+                </div>
+              </div>
+              <div class="console-module">
+                <div class="module-head">
+                  <span class="hud-title">代码终端</span>
+                  <span class="hud-label">TERMINAL</span>
+                </div>
+                <div class="code-window">
+                  <div class="code-window-bar">
+                    <span class="dot-red"></span>
+                    <span class="dot-yellow"></span>
+                    <span class="dot-green"></span>
+                    <em>mission.js</em>
+                  </div>
+                  <div class="code-window-body">
+                    <div id="code-lines"></div>
+                    <span class="cursor"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="console-module">
+                <div class="module-head">
+                  <span class="hud-title">遥测数据</span>
+                  <span class="hud-label">DATA</span>
+                </div>
+                <div class="data-line"><span class="telemetry-label">文章</span><span class="telemetry-value" id="tel-posts">08</span></div>
+                <div class="data-line"><span class="telemetry-label">知识档案</span><span class="telemetry-value" id="tel-books">05</span></div>
+                <div class="data-line"><span class="telemetry-label">系统模块</span><span class="telemetry-value" id="tel-modules">08</span></div>
+                <div class="data-line"><span class="telemetry-label">系统状态</span><span class="telemetry-value">正常</span></div>
+                <div class="data-line"><span class="telemetry-label">通信状态</span><span class="telemetry-value">稳定</span></div>
+              </div>
             </div>
-          </div>
-          <span class="hero-chip"><i class="sys-dot"></i>SYS.ONLINE · 持续更新中</span>
+            <div class="console-foot">
+              <i class="signal-dot ok"></i>
+              <span>开发者网络在线</span>
+              <span class="foot-en">DEVLOG NETWORK ONLINE</span>
+            </div>
+          </section>
         </div>
       </div>
       <a class="hero-scroll" href="#weather" aria-label="向下滚动">
@@ -101,65 +190,62 @@
     </section>
 
     <div class="container home-main">
-      <!-- 天气预报 -->
-      <section class="home-section weather-section" id="weather" data-reveal>
+      <!-- 地面环境遥测 -->
+      <section class="home-section" id="weather" data-reveal>
         <div class="home-section-head">
-          <span class="section-eyebrow">01 // WEATHER</span>
-          <h2>天气预报</h2>
-          <p class="sub">未来 5 天 · 模拟数据</p>
+          <span class="section-eyebrow">01 / 地面环境遥测 <span class="eyebrow-en">GROUND STATION</span></span>
+          <h2>地面环境数据</h2>
+          <p class="sub">空间站正在接收地面气象数据</p>
         </div>
         <div id="weather-list" class="weather-grid"></div>
       </section>
 
-      <!-- 精选文章 -->
+      <!-- 核心任务日志 -->
       <section class="home-section" data-reveal>
         <div class="home-section-head">
-          <span class="section-eyebrow">02 // FEATURED</span>
-          <h2>精选文章</h2>
+          <span class="section-eyebrow">02 / 核心任务日志 <span class="eyebrow-en">MISSION LOG</span></span>
+          <h2>核心任务日志</h2>
           <p class="sub">挑几篇有代表性的，从这开始读</p>
         </div>
         <div id="featured-list" class="featured-grid"></div>
       </section>
 
-      <!-- 技能 -->
+      <!-- 系统能力模块 -->
       <section class="home-section" data-reveal>
         <div class="home-section-head">
-          <span class="section-eyebrow">03 // STACK</span>
-          <h2>我的技能</h2>
-          <p class="sub">日常工作的技术栈</p>
+          <span class="section-eyebrow">03 / 系统能力模块 <span class="eyebrow-en">SYSTEM MODULES</span></span>
+          <h2>系统能力模块</h2>
+          <p class="sub">当前安装并启用的技术模块</p>
         </div>
-        <div class="skill-tags">
-          <span class="skill-tag">JavaScript / TypeScript</span>
-          <span class="skill-tag">Vue3</span>
-          <span class="skill-tag">React</span>
-          <span class="skill-tag">Node.js</span>
-          <span class="skill-tag">CSS / 响应式布局</span>
-          <span class="skill-tag">Vite / Webpack</span>
-          <span class="skill-tag">性能优化</span>
-          <span class="skill-tag">前端工程化</span>
-        </div>
+        <div id="module-list" class="module-grid"></div>
       </section>
 
-      <!-- 最新文章 -->
+      <!-- 最新通讯 -->
       <section class="home-section" data-reveal>
         <div class="home-section-head">
-          <span class="section-eyebrow">04 // LATEST</span>
-          <h2>最新文章</h2>
-          <p class="sub">最近更新的内容</p>
+          <span class="section-eyebrow">04 / 最新通讯 <span class="eyebrow-en">TRANSMISSION</span></span>
+          <h2>最新通讯</h2>
+          <p class="sub">最近接收到的任务通讯</p>
         </div>
-        <ul id="latest-list" class="recent-list home-latest"></ul>
-        <div class="section-more">
-          <a class="btn btn-ghost" href="articles.html">查看全部文章</a>
-        </div>
+        <div id="transmission-list" class="transmission-wrap"></div>
       </section>
 
-      <!-- CTA -->
-      <section class="cta-banner" data-reveal>
-        <h3>对某篇文章感兴趣？</h3>
-        <p>前往文章列表，按分类浏览全部内容，或者到"关于我"页面找我聊聊。</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="articles.html">浏览文章列表</a>
-          <a class="btn btn-ghost" href="about.html">联系我</a>
+      <!-- 通信频道 -->
+      <section class="comms-panel" data-reveal>
+        <p class="comms-title">通信频道可用</p>
+        <p class="comms-en">COMMUNICATION CHANNEL AVAILABLE</p>
+        <p class="comms-main">继续探索？</p>
+        <p class="comms-desc">查看更多技术日志，或者了解这座个人数字空间站的创建者。</p>
+        <div class="comms-actions">
+          <a class="btn btn-primary" href="articles.html">查看全部文章<span class="btn-en">ALL LOGS</span></a>
+          <a class="btn btn-ghost" href="about.html">查看个人档案<span class="btn-en">CREW PROFILE</span></a>
+        </div>
+        <div class="comms-foot">
+          <span class="status-item"><i class="signal-dot ok"></i>信号强度 100%</span>
+          <span>通信稳定</span>
+          <svg class="comms-wave" viewBox="0 0 120 22" fill="none" aria-hidden="true">
+            <path d="M2 11 Q12 2 22 11 T42 11 T62 11 T82 11 T102 11 T118 11" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
         </div>
       </section>
     </div>
@@ -167,15 +253,15 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p class="footer-info">© 2026 DevLog · 建站于 2026 年 8 月</p>
+      <p class="footer-info">© 2026 DEVLOG · 轨道开发者系统 · 建站于 2026 年 8 月</p>
       <p class="footer-links">
         <a href="index.html">首页</a>
         <a href="articles.html">文章</a>
         <a href="books.html">图书</a>
-        <a href="menu.html">菜单</a>
+        <a href="menu.html">实验舱</a>
         <a href="links.html">友链</a>
-        <a href="structure.html">结构</a>
-        <a href="about.html">关于</a>
+        <a href="structure.html">系统结构</a>
+        <a href="about.html">关于我</a>
       </p>
       <a class="codex-badge" href="https://openai.com/codex/" target="_blank" rel="noopener" aria-label="由 Codex 驱动">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

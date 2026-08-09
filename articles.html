@@ -4,42 +4,70 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="DevLog 全部技术文章：前端开发、JavaScript、工程化与性能优化。">
-  <title>文章 - DevLog</title>
+  <title>任务日志档案库 - DEVLOG</title>
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-page="articles">
 
   <header class="site-header">
-    <div class="container header-inner">
-      <a class="logo" href="index.html">
-        <span class="logo-mark">&lt;/&gt;</span>
-        <span class="logo-name">DevLog</span>
-      </a>
-      <div class="header-right">
-        <nav class="main-nav" aria-label="主导航">
-        <a href="index.html" class="nav-link">首页</a>
-        <a href="articles.html" class="nav-link active">文章</a>
-        <a href="books.html" class="nav-link">图书</a>
-        <a href="menu.html" class="nav-link">菜单</a>
-        <a href="links.html" class="nav-link">友链</a>
-        <a href="structure.html" class="nav-link">结构</a>
-        <a href="about.html" class="nav-link">关于</a>
-        </nav>
-        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换主题">
-          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M19.4 4.6l-1.8 1.8M6.4 17.6l-1.8 1.8"/></svg>
-        </button>
+    <div class="container">
+      <div class="header-top">
+        <a class="logo" href="index.html">
+          <span class="logo-mark">&lt;/&gt;</span>
+          <span class="logo-text">
+            <span class="logo-name">DEVLOG</span>
+            <span class="logo-sub">轨道开发者系统</span>
+          </span>
+        </a>
+        <div class="header-right">
+          <nav class="main-nav" aria-label="主导航">
+            <a href="index.html" class="nav-link">首页<span class="nav-en">COMMAND</span></a>
+            <a href="articles.html" class="nav-link">文章<span class="nav-en">LOGS</span></a>
+            <a href="books.html" class="nav-link">图书<span class="nav-en">ARCHIVE</span></a>
+            <a href="menu.html" class="nav-link">实验舱<span class="nav-en">LAB</span></a>
+            <a href="links.html" class="nav-link">友链<span class="nav-en">RELAY</span></a>
+            <a href="structure.html" class="nav-link">系统结构<span class="nav-en">SYSTEM</span></a>
+            <a href="about.html" class="nav-link">关于我<span class="nav-en">PROFILE</span></a>
+          </nav>
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换主题">
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M19.4 4.6l-1.8 1.8M6.4 17.6l-1.8 1.8"/></svg>
+          </button>
+          <button id="nav-toggle" class="nav-toggle" type="button" aria-label="打开菜单" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+        </div>
       </div>
+      <div class="status-bar" aria-label="系统状态">
+        <span class="status-item"><i class="signal-dot ok"></i><span class="status-ok">系统在线</span></span>
+        <span class="status-item hide-mobile">轨道通信正常</span>
+        <span class="status-item hide-mobile">信号 100%</span>
+        <span class="status-item hide-mobile">版本 2.0</span>
+        <span class="status-item" id="status-clock"></span>
+        <span class="status-item" id="status-clock-short"></span>
+      </div>
+      <nav class="mobile-menu" id="mobile-menu" aria-label="移动端导航"></nav>
     </div>
   </header>
+
+  <canvas id="starfield" aria-hidden="true"></canvas>
 
   <main class="container page-layout">
     <!-- 左侧：文章列表 -->
     <section class="content-main" id="posts" aria-label="文章列表">
       <div class="page-heading" data-reveal>
-        <h1>最新文章</h1>
-        <p class="page-subtitle">记录学习与实践中的每一个脚印</p>
+        <span class="section-eyebrow">任务日志档案库 <span class="eyebrow-en">MISSION LOG DATABASE</span></span>
+        <h1>任务日志档案库</h1>
+        <p class="page-subtitle">这里记录我的技术研究、开发经验与长期思考。</p>
+      </div>
+      <div class="filter-row" data-reveal>
+        <span class="filter-label">FILTER CHANNEL //</span>
+        <a class="filter-chip active" href="articles.html#posts" data-cat="">全部</a>
+        <a class="filter-chip" href="#category=%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" data-cat="前端开发">前端</a>
+        <a class="filter-chip" href="#category=JavaScript" data-cat="JavaScript">JavaScript</a>
+        <a class="filter-chip" href="#category=%E5%B7%A5%E7%A8%8B%E5%8C%96" data-cat="工程化">工程</a>
+        <a class="filter-chip" href="#category=%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96" data-cat="性能优化">性能</a>
       </div>
       <div id="article-list" class="post-list" data-reveal></div>
     </section>
@@ -49,7 +77,8 @@
       <section class="widget profile-card">
         <img class="avatar" src="images/avatar.svg" alt="林默的头像">
         <h3 class="profile-name">林默</h3>
-        <p class="profile-bio">热爱前端开发的工程师，喜欢把复杂的技术讲清楚。</p>
+        <p class="profile-role">前端工程师</p>
+        <span class="profile-online"><i class="signal-dot ok"></i>当前在线</span>
         <div class="profile-links">
           <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
           <a href="mailto:hello@example.com">邮箱</a>
@@ -58,12 +87,12 @@
       </section>
 
       <section class="widget">
-        <h4 class="widget-title">文章分类</h4>
+        <h4 class="widget-title">日志分类</h4>
         <ul id="category-list" class="category-list"></ul>
       </section>
 
       <section class="widget">
-        <h4 class="widget-title">最新文章</h4>
+        <h4 class="widget-title">最新日志</h4>
         <ul id="recent-list" class="recent-list"></ul>
       </section>
     </aside>
@@ -76,9 +105,9 @@
         <a href="index.html">首页</a>
         <a href="articles.html">文章</a>
         <a href="books.html">图书</a>
-        <a href="menu.html">菜单</a>
+        <a href="menu.html">实验舱</a>
         <a href="links.html">友链</a>
-        <a href="structure.html">结构</a>
+        <a href="structure.html">系统结构</a>
         <a href="about.html">关于</a>
       </p>
       <a class="codex-badge" href="https://openai.com/codex/" target="_blank" rel="noopener" aria-label="由 Codex 驱动">

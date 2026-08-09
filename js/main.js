@@ -347,32 +347,41 @@ const WEATHER_ICONS = {
 /* ---------- 模拟友链数据（友情链接页） ---------- */
 
 const LINKS = [
-  { name: 'GitHub', url: 'https://github.com/', initial: 'G', desc: '全球最大的开源代码托管平台，几乎每天都要逛。' },
-  { name: 'MDN Web Docs', url: 'https://developer.mozilla.org/', initial: 'M', desc: '最权威的 Web 开发文档，查 API 和标准的第一站。' },
-  { name: 'Stack Overflow', url: 'https://stackoverflow.com/', initial: 'S', desc: '遇到报错先来这里，你踩过的坑基本都有人踩过。' },
-  { name: '掘金', url: 'https://juejin.cn/', initial: '掘', desc: '中文技术社区，刷文章、看面试题的常驻去处。' },
-  { name: '阮一峰的网络日志', url: 'https://www.ruanyifeng.com/blog/', initial: '阮', desc: '坚持写作十几年的技术博客，每周必读。' },
-  { name: 'CSS-Tricks', url: 'https://css-tricks.com/', initial: 'C', desc: 'CSS 技巧与前端干货，布局灵感的来源。' },
-  { name: 'Can I use', url: 'https://caniuse.com/', initial: 'C', desc: '浏览器特性兼容性查询，上线前必查。' },
-  { name: 'Vite', url: 'https://vitejs.dev/', initial: 'V', desc: '下一代前端构建工具，本站构建思路的来源。' },
-  { name: 'Dev.to', url: 'https://dev.to/', initial: 'D', desc: '海外开发者社区，观点与经验的分享地。' }
+  { name: 'GitHub', url: 'https://github.com/', initial: 'G', type: '代码托管', desc: '全球最大的开源代码托管平台，几乎每天都要逛。' },
+  { name: 'MDN Web Docs', url: 'https://developer.mozilla.org/', initial: 'M', type: '技术文档', desc: '最权威的 Web 开发文档，查 API 和标准的第一站。' },
+  { name: 'Stack Overflow', url: 'https://stackoverflow.com/', initial: 'S', type: '问答社区', desc: '遇到报错先来这里，你踩过的坑基本都有人踩过。' },
+  { name: '掘金', url: 'https://juejin.cn/', initial: '掘', type: '中文社区', desc: '中文技术社区，刷文章、看面试题的常驻去处。' },
+  { name: '阮一峰的网络日志', url: 'https://www.ruanyifeng.com/blog/', initial: '阮', type: '个人博客', desc: '坚持写作十几年的技术博客，每周必读。' },
+  { name: 'CSS-Tricks', url: 'https://css-tricks.com/', initial: 'C', type: '前端资讯', desc: 'CSS 技巧与前端干货，布局灵感的来源。' },
+  { name: 'Can I use', url: 'https://caniuse.com/', initial: 'C', type: '兼容性工具', desc: '浏览器特性兼容性查询，上线前必查。' },
+  { name: 'Vite', url: 'https://vitejs.dev/', initial: 'V', type: '构建工具', desc: '下一代前端构建工具，本站构建思路的来源。' },
+  { name: 'Dev.to', url: 'https://dev.to/', initial: 'D', type: '海外社区', desc: '海外开发者社区，观点与经验的分享地。' }
 ];
 
 /* ---------- Hero 代码窗口内容（打字机效果） ---------- */
 
 const CODE_LINES = [
-  [{ cls: 'c-comment', text: '// 保持好奇，持续输出' }],
-  [{ cls: 'c-keyword', text: 'const' }, { text: ' developer = {' }],
-  [{ text: '  name: ' }, { cls: 'c-string', text: "'林默'" }, { text: ',' }],
-  [{ text: '  stack: [' }, { cls: 'c-string', text: "'Vue'" }, { text: ', ' }, { cls: 'c-string', text: "'React'" }, { text: ', ' }, { cls: 'c-string', text: "'Node'" }, { text: '],' }],
-  [{ text: '  blog: ' }, { cls: 'c-string', text: "'DevLog'" }, { text: ',' }],
-  [{ text: '  motto: ' }, { cls: 'c-string', text: "'把复杂讲清楚'" }, { text: ',' }],
+  [{ cls: 'c-comment', text: '// 个人轨道任务配置' }],
+  [{ cls: 'c-keyword', text: 'const' }, { text: ' mission = {' }],
+  [{ text: '  operator: ' }, { cls: 'c-string', text: '"林默"' }, { text: ',' }],
+  [{ text: '  role: ' }, { cls: 'c-string', text: '"前端工程师"' }, { text: ',' }],
+  [{ text: '  status: ' }, { cls: 'c-string', text: '"ONLINE"' }, { text: ',' }],
+  [{ text: '  target: ' }, { cls: 'c-string', text: '"探索 · 构建 · 记录"' }, { text: ',' }],
   [{ text: '};' }],
-  [{ text: '' }],
-  [{ cls: 'c-keyword', text: 'while' }, { text: ' (writing) {' }],
-  [{ text: '  learn();' }],
-  [{ text: '  share();' }],
-  [{ text: '}' }]
+  [{ text: '' }]
+];
+
+/* ---------- 首页系统能力模块数据 ---------- */
+
+const MODULES = [
+  { name: 'JavaScript / TypeScript', type: '核心语言模块', status: '主力', statusEn: 'PRIMARY', level: 5 },
+  { name: 'Vue 3', type: '界面开发模块', status: '常用', statusEn: 'ACTIVE', level: 4 },
+  { name: 'React', type: '界面开发模块', status: '启用', statusEn: 'WORKING', level: 3 },
+  { name: 'Node.js', type: '服务模块', status: '启用', statusEn: 'WORKING', level: 4 },
+  { name: '性能优化', type: '工程能力模块', status: '主力', statusEn: 'PRIMARY', level: 5 },
+  { name: '前端工程化', type: '工程能力模块', status: '常用', statusEn: 'ACTIVE', level: 4 },
+  { name: 'AI 辅助开发', type: '效率模块', status: '学习中', statusEn: 'EXPLORING', level: 3 },
+  { name: '技术写作', type: '内容模块', status: '探索中', statusEn: 'EXPLORING', level: 3 }
 ];
 
 /* ---------- 工具函数 ---------- */
@@ -399,21 +408,33 @@ function getCategoryCounts() {
 
 /* ---------- 首页：文章卡片 ---------- */
 
+const LOG_PREFIX = { '前端开发': 'FE', 'JavaScript': 'JS', '工程化': 'ENG', '性能优化': 'PERF' };
+
+function logId(post) {
+  const prefix = LOG_PREFIX[post.category] || 'LOG';
+  const index = POSTS.findIndex((p) => p.id === post.id);
+  return `${prefix}-${String(Math.max(index, 0) + 1).padStart(3, '0')}`;
+}
+
 function renderPostCard(post) {
   return `
-    <article class="post-card">
+    <article class="post-card scan-target">
+      <span class="scan-line"></span>
+      <div class="card-head">
+        <span class="mission-id">LOG / ${logId(post)}</span>
+        <span class="read-time">约 ${post.readTime} 分钟</span>
+      </div>
       <a class="card-cover" href="article.html?id=${post.id}">
         <img src="${post.cover}" alt="${escapeHtml(post.title)}" loading="lazy">
       </a>
       <div class="card-body">
-        <div class="card-meta">
-          <a class="tag" href="articles.html#category=${encodeURIComponent(post.category)}">${escapeHtml(post.category)}</a>
-          <time datetime="${post.date}">${post.date}</time>
-          <span class="read-time">${post.readTime} 分钟</span>
-        </div>
         <h2 class="card-title"><a href="article.html?id=${post.id}">${escapeHtml(post.title)}</a></h2>
         <p class="card-summary">${escapeHtml(post.summary)}</p>
-        <span class="card-more">阅读全文 →</span>
+        <div class="card-meta">
+          <a class="tag" href="articles.html#category=${encodeURIComponent(post.category)}">${escapeHtml(post.category)}</a>
+          <time datetime="${post.date}">${post.date.replace(/-/g, '.')}</time>
+        </div>
+        <span class="card-more">查看日志 →</span>
       </div>
     </article>`;
 }
@@ -445,6 +466,10 @@ function applyCategoryFilter() {
   currentCategory = getHashCategory();
   renderPostList();
   renderCategoryList();
+
+  document.querySelectorAll('.filter-chip').forEach((chip) => {
+    chip.classList.toggle('active', (chip.dataset.cat || '') === (currentCategory || ''));
+  });
 
   const posts = document.getElementById('posts');
   if (currentCategory && posts) {
@@ -510,12 +535,14 @@ function renderHome() {
     weather.innerHTML = WEATHER_DAYS.map((day, index) => {
       const d = new Date();
       d.setDate(d.getDate() + index + 1);
-      const label = `${d.getMonth() + 1}月${d.getDate()}日`;
+      const current = Math.round((day.high + day.low) / 2);
+      const label = `${d.getMonth() + 1}月${String(d.getDate()).padStart(2, '0')}日`;
       return `
         <div class="weather-card">
           <div class="weather-date">${label} · ${weekdays[d.getDay()]}</div>
           <div class="weather-icon">${WEATHER_ICONS[day.icon] || ''}</div>
           <div class="weather-temp">${day.high}° / ${day.low}°</div>
+          <div class="weather-meta">当前温度 ${current}°</div>
           <div class="weather-desc">${escapeHtml(day.desc)}</div>
         </div>`;
     }).join('');
@@ -526,28 +553,55 @@ function renderHome() {
     featured.innerHTML = sortByDateDesc(POSTS).slice(0, 3).map(renderPostCard).join('');
   }
 
-  const latest = document.getElementById('latest-list');
-  if (latest) {
-    latest.innerHTML = sortByDateDesc(POSTS)
-      .slice(0, 5)
-      .map(
-        (post) => `
-          <li>
-            <a href="article.html?id=${post.id}">
-              <img class="recent-thumb" src="${post.cover}" alt="" loading="lazy">
-              <span class="recent-title">${escapeHtml(post.title)}
-                <span class="recent-date">${post.date}</span>
-              </span>
-            </a>
-          </li>`
-      )
-      .join('');
-  }
+  renderModules();
+  renderTransmission();
 
-  const statPosts = document.getElementById('stat-posts');
-  if (statPosts) statPosts.textContent = POSTS.length;
-  const statCats = document.getElementById('stat-cats');
-  if (statCats) statCats.textContent = CATEGORIES.length;
+  const telPosts = document.getElementById('tel-posts');
+  if (telPosts) telPosts.textContent = POSTS.length;
+  const telBooks = document.getElementById('tel-books');
+  if (telBooks) telBooks.textContent = BOOKS.length;
+  const telModules = document.getElementById('tel-modules');
+  if (telModules) telModules.textContent = MODULES.length;
+}
+
+function renderModules() {
+  const container = document.getElementById('module-list');
+  if (!container) return;
+
+  container.innerHTML = MODULES.map((mod) => {
+    const primary = mod.status === '主力' ? ' primary' : '';
+    return `
+      <div class="module-card">
+        <div class="module-top">
+          <div>
+            <div class="module-name">${escapeHtml(mod.name)}</div>
+            <div class="module-type">${escapeHtml(mod.type)}</div>
+          </div>
+          <span class="module-status${primary}"><i class="signal-dot"></i>${escapeHtml(mod.status)} <span class="hud-label">${mod.statusEn}</span></span>
+        </div>
+        <div class="module-bars">${'<i></i>'.repeat(mod.level)}</div>
+      </div>`;
+  }).join('');
+}
+
+function renderTransmission() {
+  const container = document.getElementById('transmission-list');
+  if (!container) return;
+
+  container.innerHTML = sortByDateDesc(POSTS)
+    .slice(0, 5)
+    .map((post, index) => `
+      <a class="transmission-row" href="article.html?id=${post.id}">
+        <span class="tx-id">L-${String(index + 1).padStart(3, '0')}</span>
+        <span class="tx-title">${escapeHtml(post.title)}</span>
+        <span class="tx-cat">${escapeHtml(post.category)}</span>
+        <span class="tx-date">${post.date.slice(5).replace('-', '.')}</span>
+        <span class="tx-right">
+          <span class="tx-status"><i class="signal-dot ok"></i>已接收</span>
+          <span class="tx-open">打开 →</span>
+        </span>
+      </a>`)
+    .join('');
 }
 
 /* ---------- 首页：代码打字机 ---------- */
@@ -585,8 +639,8 @@ function initHeroParallax() {
   hero.addEventListener('mousemove', (e) => {
     const x = e.clientX / window.innerWidth - 0.5;
     const y = e.clientY / window.innerHeight - 0.5;
-    if (space) space.style.transform = `translate(${x * -20}px, ${y * -14}px)`;
-    if (visual) visual.style.transform = `translate(${x * 12}px, ${y * 8}px)`;
+    if (space) space.style.transform = `translate(${x * -10}px, ${y * -7}px)`;
+    if (visual) visual.style.transform = `translate(${x * 6}px, ${y * 4}px)`;
   });
   hero.addEventListener('mouseleave', () => {
     if (space) space.style.transform = '';
@@ -616,7 +670,7 @@ function initCardTilt() {
 
 function initStatCounters() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  document.querySelectorAll('.hero-stat b').forEach((el) => {
+  document.querySelectorAll('#tel-posts, #tel-books, #tel-modules').forEach((el) => {
     const target = parseInt(el.textContent, 10);
     if (Number.isNaN(target)) return;
     const duration = 900;
@@ -644,7 +698,7 @@ function toggleFavorite(button) {
   }
   const faved = favoriteBooks.has(id);
   button.classList.toggle('faved', faved);
-  button.textContent = faved ? '已收藏' : '收藏';
+  button.textContent = faved ? '✓ 已归档' : '加入档案';
 }
 
 function renderBooks() {
@@ -663,6 +717,10 @@ function renderBooks() {
 
   container.innerHTML = filtered.map((book, index) => `
     <article class="book-card">
+      <div class="book-top">
+        <span class="book-id">BOOK-${String(index + 1).padStart(3, '0')}</span>
+        <span class="hud-label">${escapeHtml(book.code)}</span>
+      </div>
       <div class="book-cover book-cover-${(index % 5) + 1}"><span class="book-code">${escapeHtml(book.code)}</span></div>
       <div class="book-body">
         <h3 class="book-title">${escapeHtml(book.title)}</h3>
@@ -670,7 +728,7 @@ function renderBooks() {
         <p class="book-desc">${escapeHtml(book.desc)}</p>
         <div class="book-footer">
           <button class="fav-btn${favoriteBooks.has(book.id) ? ' faved' : ''}" type="button" data-id="${book.id}">
-            ${favoriteBooks.has(book.id) ? '已收藏' : '收藏'}
+            ${favoriteBooks.has(book.id) ? '✓ 已归档' : '加入档案'}
           </button>
         </div>
       </div>
@@ -687,11 +745,17 @@ function renderLinks() {
     const domain = link.url.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
     return `
       <a class="link-card" href="${escapeHtml(link.url)}" target="_blank" rel="noopener">
-        <span class="link-avatar avatar-${(index % 6) + 1}">${escapeHtml(link.initial)}</span>
+        <span class="link-avatar">${escapeHtml(link.initial)}</span>
         <span class="link-body">
+          <span class="link-node-id">NODE-${String(index + 1).padStart(3, '0')} // 通信节点</span>
           <span class="link-name">${escapeHtml(link.name)}</span>
           <span class="link-desc">${escapeHtml(link.desc)}</span>
-          <span class="link-domain">↗ ${escapeHtml(domain)}</span>
+          <span class="link-meta">
+            <span class="link-type">${escapeHtml(link.type)}</span>
+            <span class="link-domain">${escapeHtml(domain)}</span>
+            <span class="link-status"><i class="signal-dot ok"></i>已连接</span>
+          </span>
+          <span class="link-open">访问节点 →</span>
         </span>
       </a>`;
   }).join('');
@@ -715,7 +779,7 @@ function renderMenu() {
           <p class="dish-desc">${escapeHtml(dish.desc)}</p>
           <div class="dish-footer">
             <span class="dish-price">¥${dish.price}</span>
-            <button class="add-btn" type="button" data-id="${dish.id}">${qty ? `加入订单（${qty}）` : '加入订单'}</button>
+            <button class="add-btn" type="button" data-id="${dish.id}">${qty ? `加入补给清单（${qty}）` : '加入补给清单'}</button>
           </div>
         </div>
       </article>`;
@@ -779,7 +843,7 @@ function renderBlocks(blocks) {
           return `
             <div class="code-block">
               <div class="code-header">
-                <span class="code-lang">${escapeHtml(block.lang || 'code')}</span>
+                <span class="code-lang">代码模块 / ${escapeHtml(block.lang || 'code')}</span>
                 <button class="copy-btn" type="button">复制</button>
               </div>
               <pre><code>${escapeHtml(block.code)}</code></pre>
@@ -813,7 +877,7 @@ function renderArticlePage() {
     return;
   }
 
-  document.title = `${post.title} - ${SITE.name}`;
+  document.title = `${post.title} - DEVLOG`;
 
   const sorted = sortByDateDesc(POSTS);
   const index = sorted.findIndex((item) => item.id === post.id);
@@ -829,18 +893,14 @@ function renderArticlePage() {
   container.innerHTML = `
     <article class="article-card" data-reveal>
       <header class="article-header">
-        <div class="article-meta">
-          <a class="tag" href="articles.html#category=${encodeURIComponent(post.category)}">${escapeHtml(post.category)}</a>
-          <span class="author-line">
-            <img src="images/avatar.svg" alt="${escapeHtml(SITE.author)}">
-            ${escapeHtml(SITE.author)}
-          </span>
-          <time datetime="${post.date}">${post.date}</time>
-          <span class="read-time">${post.readTime} 分钟</span>
-        </div>
+        <div class="article-eyebrow">任务日志 / ${logId(post)}</div>
         <h1>${escapeHtml(post.title)}</h1>
-        <div class="article-meta">
-          ${post.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}
+        <div class="article-data">
+          <div class="data-item"><span class="telemetry-label">作者</span><span class="telemetry-value">${escapeHtml(SITE.author)}</span></div>
+          <div class="data-item"><span class="telemetry-label">日期</span><span class="telemetry-value">${post.date.replace(/-/g, '.')}</span></div>
+          <div class="data-item"><span class="telemetry-label">分类</span><span class="telemetry-value">${escapeHtml(post.category)}</span></div>
+          <div class="data-item"><span class="telemetry-label">阅读时间</span><span class="telemetry-value">约 ${post.readTime} 分钟</span></div>
+          <div class="data-item"><span class="telemetry-label">状态</span><span class="telemetry-value">已归档</span></div>
         </div>
       </header>
       <div class="article-cover">
@@ -875,7 +935,7 @@ async function copyCode(button) {
   }
 
   const original = button.textContent;
-  button.textContent = '已复制';
+  button.textContent = '已复制 ✓';
   button.classList.add('copied');
   setTimeout(() => {
     button.textContent = original;
@@ -921,8 +981,8 @@ document.addEventListener('click', (event) => {
     });
     const count = items.reduce((sum, [, qty]) => sum + qty, 0);
     toast.textContent = items.length
-      ? `订单提交成功！共 ${count} 份菜品，合计 ¥${total}`
-      : '请先添加菜品，再提交订单';
+      ? `补给确认成功！共 ${count} 份补给项目，合计 ¥${total}`
+      : '请先添加补给项目，再确认补给';
     toast.hidden = false;
     requestAnimationFrame(() => toast.classList.add('show'));
     clearTimeout(toast._timer);
@@ -943,8 +1003,7 @@ function initTheme() {
   } catch (err) {
     stored = null;
   }
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  root.dataset.theme = stored === 'dark' || stored === 'light' ? stored : prefersDark ? 'dark' : 'light';
+  root.dataset.theme = stored === 'dark' || stored === 'light' ? stored : 'dark';
 
   const toggle = document.getElementById('theme-toggle');
   if (toggle) {
@@ -962,9 +1021,278 @@ function initTheme() {
 
 initTheme();
 
+/* ---------- 系统状态栏 / 移动菜单 / 导航高亮 ---------- */
+
+function initChrome() {
+  const full = document.getElementById('status-clock');
+  const short = document.getElementById('status-clock-short');
+  const pad = (n) => String(n).padStart(2, '0');
+  const tick = () => {
+    const d = new Date();
+    const hms = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+    if (full) full.textContent = hms;
+    if (short) short.textContent = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  };
+  tick();
+  setInterval(tick, 1000);
+
+  const mobileMenu = document.getElementById('mobile-menu');
+  const navToggle = document.getElementById('nav-toggle');
+  if (mobileMenu && navToggle) {
+    mobileMenu.innerHTML = '';
+    document.querySelectorAll('.main-nav .nav-link').forEach((link) => {
+      const a = document.createElement('a');
+      a.href = link.getAttribute('href');
+      a.innerHTML = link.innerHTML;
+      mobileMenu.appendChild(a);
+    });
+    navToggle.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', String(open));
+    });
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target.closest('a')) {
+        mobileMenu.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  const hrefMap = {
+    home: 'index.html',
+    articles: 'articles.html',
+    books: 'books.html',
+    menu: 'menu.html',
+    links: 'links.html',
+    structure: 'structure.html',
+    about: 'about.html',
+    article: 'articles.html'
+  };
+  const target = hrefMap[document.body.dataset.page];
+  if (target) {
+    document.querySelectorAll('.main-nav .nav-link, #mobile-menu a').forEach((a) => {
+      a.classList.toggle('active', a.getAttribute('href') === target);
+    });
+  }
+}
+
+/* ---------- Canvas 星空 ---------- */
+
+const StarField = (() => {
+  let canvas = null;
+  let ctx = null;
+  let stars = [];
+  let running = false;
+  let rafId = 0;
+
+  function build() {
+    canvas = document.getElementById('starfield');
+    if (!canvas || !canvas.getContext) return;
+    ctx = canvas.getContext('2d');
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const count = Math.min(110, Math.round((window.innerWidth * window.innerHeight) / 16000));
+    stars = Array.from({ length: count }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      r: 0.3 + Math.random() * 1.1,
+      v: 0.03 + Math.random() * 0.09,
+      tw: Math.random() * Math.PI * 2,
+      sp: 0.004 + Math.random() * 0.01
+    }));
+  }
+
+  const rgb = () =>
+    document.documentElement.dataset.theme === 'light' ? '14, 33, 56' : '237, 248, 255';
+
+  function draw() {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    for (const s of stars) {
+      s.tw += s.sp;
+      const alpha = 0.2 + Math.abs(Math.sin(s.tw)) * 0.55;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${rgb()}, ${alpha})`;
+      ctx.fill();
+    }
+  }
+
+  function frame() {
+    for (const s of stars) {
+      s.y -= s.v;
+      if (s.y < -2) {
+        s.y = window.innerHeight + 2;
+        s.x = Math.random() * window.innerWidth;
+      }
+    }
+    draw();
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function start() {
+    build();
+    if (!ctx) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      draw();
+      return;
+    }
+    if (running) return;
+    running = true;
+    rafId = requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', () => {
+    build();
+    if (running) draw();
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && running) {
+      cancelAnimationFrame(rafId);
+      running = false;
+    } else if (!document.hidden && !running && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      running = true;
+      rafId = requestAnimationFrame(frame);
+    }
+  });
+
+  return { start };
+})();
+
+/* ---------- 全局指令面板（Ctrl / Cmd + K） ---------- */
+
+function initCommandPalette() {
+  const pageItems = [
+    { zh: '首页', en: 'COMMAND', href: 'index.html' },
+    { zh: '文章', en: 'LOGS', href: 'articles.html' },
+    { zh: '图书', en: 'ARCHIVE', href: 'books.html' },
+    { zh: '实验舱', en: 'LAB', href: 'menu.html' },
+    { zh: '友链', en: 'RELAY', href: 'links.html' },
+    { zh: '系统结构', en: 'SYSTEM', href: 'structure.html' },
+    { zh: '关于我', en: 'PROFILE', href: 'about.html' }
+  ];
+
+  const overlay = document.createElement('div');
+  overlay.className = 'palette-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-label', '指令面板');
+  overlay.innerHTML = `
+    <div class="palette-panel">
+      <div class="palette-head">
+        <span class="hud-label">COMMAND INTERFACE</span>
+        <input class="palette-input" id="palette-input" type="text" placeholder="搜索文章、页面或指令……" autocomplete="off">
+        <span class="palette-kbd">ESC</span>
+      </div>
+      <div class="palette-list" id="palette-list"></div>
+    </div>`;
+  document.body.appendChild(overlay);
+
+  const input = overlay.querySelector('#palette-input');
+  const list = overlay.querySelector('#palette-list');
+  let selected = 0;
+
+  function itemHtml(zh, en, href, action) {
+    return `<div class="palette-item" data-href="${href || ''}" data-action="${action || ''}"><span>${escapeHtml(zh)}</span><span class="palette-en">${escapeHtml(en)}</span></div>`;
+  }
+
+  function render() {
+    const q = input.value.trim().toLowerCase();
+    const pages = pageItems.filter(
+      (p) => !q || p.zh.includes(input.value.trim()) || p.en.toLowerCase().includes(q)
+    );
+    const posts = q
+      ? POSTS.filter((p) => p.title.toLowerCase().includes(q) || p.category.includes(input.value.trim())).slice(0, 6)
+      : POSTS.slice(0, 5);
+    const html = [];
+    if (pages.length) {
+      html.push('<div class="palette-section">页面 // PAGES</div>');
+      pages.forEach((p) => html.push(itemHtml(p.zh, p.en, p.href)));
+    }
+    if (posts.length) {
+      html.push('<div class="palette-section">任务日志 // LOGS</div>');
+      posts.forEach((p) => html.push(itemHtml(p.title, 'LOG / ' + logId(p), 'article.html?id=' + p.id)));
+    }
+    html.push('<div class="palette-section">指令 // COMMANDS</div>');
+    html.push(itemHtml('切换主题', 'TOGGLE THEME', null, 'theme'));
+    list.innerHTML = html.join('');
+    selected = 0;
+    highlight();
+  }
+
+  function highlight() {
+    [...list.querySelectorAll('.palette-item')].forEach((el, i) => el.classList.toggle('selected', i === selected));
+  }
+
+  function activate(el) {
+    if (!el) return;
+    if (el.dataset.action === 'theme') {
+      const toggle = document.getElementById('theme-toggle');
+      if (toggle) toggle.click();
+      close();
+      return;
+    }
+    if (el.dataset.href) location.href = el.dataset.href;
+  }
+
+  function open() {
+    overlay.classList.add('open');
+    input.value = '';
+    render();
+    input.focus();
+  }
+
+  function close() {
+    overlay.classList.remove('open');
+  }
+
+  list.addEventListener('click', (e) => {
+    const el = e.target.closest('.palette-item');
+    if (el) activate(el);
+  });
+  input.addEventListener('input', render);
+  input.addEventListener('keydown', (e) => {
+    const items = [...list.querySelectorAll('.palette-item')];
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selected = Math.min(selected + 1, Math.max(items.length - 1, 0));
+      highlight();
+      if (items[selected]) items[selected].scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selected = Math.max(selected - 1, 0);
+      highlight();
+      if (items[selected]) items[selected].scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      activate(items[selected]);
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (overlay.classList.contains('open')) close();
+      else open();
+    }
+    if (e.key === 'Escape' && overlay.classList.contains('open')) {
+      close();
+      input.blur();
+    }
+  });
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+  });
+}
+
 /* ---------- 初始化 ---------- */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initChrome();
+  StarField.start();
+  initCommandPalette();
   renderSidebar();
 
   const header = document.querySelector('.site-header');
@@ -1024,7 +1352,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initHeroParallax();
-  initCardTilt();
 
   // 滚动浮现动画
   const revealItems = document.querySelectorAll('[data-reveal]');
