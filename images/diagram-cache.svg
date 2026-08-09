@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420" role="img" aria-label="HTTP 缓存判断流程">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M0 0 L10 4 L0 8 Z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect width="820" height="420" rx="16" fill="#f9fafb"/>
+  <text x="410" y="36" font-size="16" font-weight="700" fill="#333333" text-anchor="middle" font-family="'PingFang SC','Microsoft YaHei',sans-serif">HTTP 缓存判断流程</text>
+
+  <rect x="330" y="62" width="160" height="46" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="410" y="90" font-size="14" fill="#1d4ed8" text-anchor="middle" font-family="'PingFang SC','Microsoft YaHei',sans-serif">浏览器发起请求</text>
+
+  <path d="M410 108 L410 142" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <polygon points="410,152 480,177 410,202 340,177" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+  <text x="410" y="174" font-size="12" fill="#92400e" text-anchor="middle" font-family="'PingFang SC','Microsoft YaHei',sans-serif">强缓存是否命中？</text>
+  <text x="410" y="190" font-size="12" fill="#92400e" text-anchor="middle" font-family="'PingFang SC','Microsoft YaHei',sans-serif">(Cache-Control / Expires)</text>
+
+  <path d="M340 177 L100 177 L100 220" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="220" y="170" font-size="12" fill="#64748b" text-anchor="middle" font-family="'PingFang SC','Microsoft YaHei',sans-serif">命中</text>
+  <rect x="20" y="228" width="160" height="46" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+  <text x="100" y="256" font-size="14" fill="#047857" text-anchor="middle" font-family="'PingFang SC','Microsoft YaHei',sans-serif">直接使用本地缓存</text>
+
+  <path d="M480 177 L720 177 L720 220" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="600" y="170" font-size="12" fill="#64748b" text-anchor="middle" font-family="'PingFang SC','Microsoft YaHei',sans-serif">未命中</text>
+  <rect x="640" y="228" width="160" height="46" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="720" y="256" font-size="14" fill="#1d4ed8" text-anchor="middle" font-family="'PingFang SC','Microsoft YaHei',sans-serif">请求服务器验证</text>
+
+  <path d="M720 274 L720 310 L445 310 L445 334" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="600" y="304" font-size="12" fill="#64748b" text-anchor="middle" font-family="'PingFang SC','Microsoft YaHei',sans-serif">命中</text>
+  <rect x="300" y="342" width="290" height="40" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+  <text x="445" y="367" font-size="13" fill="#047857" text-anchor="middle" font-family="'PingFang SC','Microsoft YaHei',sans-serif">304 → 继续使用本地缓存</text>
+
+  <path d="M720 274 L720 334" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="742" y="310" font-size="12" fill="#64748b" text-anchor="middle" font-family="'PingFang SC','Microsoft YaHei',sans-serif">未命中</text>
+  <rect x="610" y="342" width="290" height="40" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="755" y="367" font-size="13" fill="#1d4ed8" text-anchor="middle" font-family="'PingFang SC','Microsoft YaHei',sans-serif">200 → 返回新资源并写入缓存</text>
+</svg>
