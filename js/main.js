@@ -215,30 +215,35 @@ const POSTS = [
 
 const BOOKS = [
   {
+    id: 'js-red-book',
     title: 'JavaScript 高级程序设计（第 4 版）',
     author: '马特·弗里斯比',
     desc: 'JavaScript 开发者案头必备的权威指南，覆盖语言核心与最新特性。',
     emoji: '📕'
   },
   {
+    id: 'css-secrets',
     title: 'CSS 揭秘',
     author: 'Lea Verou',
     desc: '47 个实用技巧，带你重新认识 CSS 的可能性。',
     emoji: '📘'
   },
   {
+    id: 'csapp',
     title: '深入理解计算机系统（原书第 3 版）',
     author: "Randal E. Bryant / David R. O'Hallaron",
     desc: '从程序员视角理解计算机底层，构建完整知识体系。',
     emoji: '📗'
   },
   {
+    id: 'clean-code',
     title: '代码整洁之道',
     author: 'Robert C. Martin',
     desc: '如何写出易读、易维护的代码，软件工程师必读。',
     emoji: '📙'
   },
   {
+    id: 'design-patterns',
     title: '设计模式：可复用面向对象软件的基础',
     author: 'Erich Gamma 等',
     desc: '四位作者合著的经典之作，23 种设计模式的源头。',
@@ -406,6 +411,19 @@ function renderHome() {
 /* ---------- 图书列表页 ---------- */
 
 let bookQuery = '';
+const favoriteBooks = new Set();
+
+function toggleFavorite(button) {
+  const id = button.dataset.id;
+  if (favoriteBooks.has(id)) {
+    favoriteBooks.delete(id);
+  } else {
+    favoriteBooks.add(id);
+  }
+  const faved = favoriteBooks.has(id);
+  button.classList.toggle('faved', faved);
+  button.textContent = faved ? '已收藏' : '收藏';
+}
 
 function renderBooks() {
   const container = document.getElementById('book-list');
@@ -428,6 +446,11 @@ function renderBooks() {
         <h3 class="book-title">${escapeHtml(book.title)}</h3>
         <p class="book-author">${escapeHtml(book.author)}</p>
         <p class="book-desc">${escapeHtml(book.desc)}</p>
+        <div class="book-footer">
+          <button class="fav-btn${favoriteBooks.has(book.id) ? ' faved' : ''}" type="button" data-id="${book.id}">
+            ${favoriteBooks.has(book.id) ? '已收藏' : '收藏'}
+          </button>
+        </div>
       </div>
     </article>`).join('');
 }
@@ -557,8 +580,11 @@ async function copyCode(button) {
 }
 
 document.addEventListener('click', (event) => {
-  const button = event.target.closest('.copy-btn');
-  if (button) copyCode(button);
+  const copyButton = event.target.closest('.copy-btn');
+  if (copyButton) copyCode(copyButton);
+
+  const favButton = event.target.closest('.fav-btn');
+  if (favButton) toggleFavorite(favButton);
 });
 
 /* ---------- 初始化 ---------- */

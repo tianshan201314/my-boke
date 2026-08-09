@@ -1320,6 +1320,44 @@ a.tag:hover {
   overflow: hidden;
 }
 
+.book-footer {
+  margin-top: auto;
+  padding-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.fav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  background: #fff;
+  border: 1px solid var(--accent-soft-border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.fav-btn:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.fav-btn.faved {
+  color: #dc2626;
+  border-color: #fecaca;
+  background: #fef2f2;
+}
+
+.fav-btn.faved:hover {
+  background: #fee2e2;
+  border-color: #dc2626;
+}
+
 /* ---------------- 响应式适配 ---------------- */
 
 @media (max-width: 920px) {
