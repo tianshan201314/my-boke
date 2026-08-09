@@ -217,35 +217,30 @@ const BOOKS = [
   {
     title: 'JavaScript 高级程序设计（第 4 版）',
     author: '马特·弗里斯比',
-    price: '¥ 129.00',
     desc: 'JavaScript 开发者案头必备的权威指南，覆盖语言核心与最新特性。',
     emoji: '📕'
   },
   {
     title: 'CSS 揭秘',
     author: 'Lea Verou',
-    price: '¥ 98.00',
     desc: '47 个实用技巧，带你重新认识 CSS 的可能性。',
     emoji: '📘'
   },
   {
     title: '深入理解计算机系统（原书第 3 版）',
     author: "Randal E. Bryant / David R. O'Hallaron",
-    price: '¥ 139.00',
     desc: '从程序员视角理解计算机底层，构建完整知识体系。',
     emoji: '📗'
   },
   {
     title: '代码整洁之道',
     author: 'Robert C. Martin',
-    price: '¥ 59.00',
     desc: '如何写出易读、易维护的代码，软件工程师必读。',
     emoji: '📙'
   },
   {
     title: '设计模式：可复用面向对象软件的基础',
     author: 'Erich Gamma 等',
-    price: '¥ 78.00',
     desc: '四位作者合著的经典之作，23 种设计模式的源头。',
     emoji: '📓'
   }
@@ -421,9 +416,6 @@ function renderBooks() {
         <h3 class="book-title">${escapeHtml(book.title)}</h3>
         <p class="book-author">${escapeHtml(book.author)}</p>
         <p class="book-desc">${escapeHtml(book.desc)}</p>
-        <div class="book-footer">
-          <span class="book-price">${escapeHtml(book.price)}</span>
-        </div>
       </div>
     </article>`).join('');
 }

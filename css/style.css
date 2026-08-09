@@ -1282,22 +1282,6 @@ a.tag:hover {
   overflow: hidden;
 }
 
-.book-footer {
-  margin-top: 14px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.book-price {
-  background: var(--accent-soft);
-  color: var(--accent-dark);
-  border: 1px solid var(--accent-soft-border);
-  font-weight: 700;
-  font-size: 14px;
-  padding: 4px 12px;
-  border-radius: 999px;
-}
-
 /* ---------------- 响应式适配 ---------------- */
 
 @media (max-width: 920px) {
