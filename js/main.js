@@ -264,6 +264,16 @@ const MENU = [
   { id: 'yangzhou-chaofan', name: '扬州炒饭', price: 20, desc: '粒粒分明，虾仁、火腿、鸡蛋配料丰富。' }
 ];
 
+/* ---------- 模拟天气数据（首页天气预报） ---------- */
+
+const WEATHER_DAYS = [
+  { icon: '☀️', high: 33, low: 26, desc: '晴' },
+  { icon: '⛅', high: 31, low: 25, desc: '多云' },
+  { icon: '🌧️', high: 27, low: 23, desc: '小雨' },
+  { icon: '⛈️', high: 26, low: 22, desc: '雷阵雨' },
+  { icon: '🌤️', high: 29, low: 24, desc: '多云转晴' }
+];
+
 /* ---------- 工具函数 ---------- */
 
 function escapeHtml(str) {
@@ -392,6 +402,23 @@ function renderSidebar() {
 /* ---------- 首页（落地页） ---------- */
 
 function renderHome() {
+  const weather = document.getElementById('weather-list');
+  if (weather) {
+    const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+    weather.innerHTML = WEATHER_DAYS.map((day, index) => {
+      const d = new Date();
+      d.setDate(d.getDate() + index + 1);
+      const label = `${d.getMonth() + 1}月${d.getDate()}日`;
+      return `
+        <div class="weather-card">
+          <div class="weather-date">${label} · ${weekdays[d.getDay()]}</div>
+          <div class="weather-icon">${day.icon}</div>
+          <div class="weather-temp">${day.high}° / ${day.low}°</div>
+          <div class="weather-desc">${escapeHtml(day.desc)}</div>
+        </div>`;
+    }).join('');
+  }
+
   const featured = document.getElementById('featured-list');
   if (featured) {
     featured.innerHTML = sortByDateDesc(POSTS).slice(0, 3).map(renderPostCard).join('');

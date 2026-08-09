@@ -44,11 +44,22 @@ html {
 body {
   padding-top: var(--header-h);
   font-family: var(--font-stack);
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.055) 1px, transparent 1px),
+    radial-gradient(1100px 520px at 88% -8%, rgba(59, 130, 246, 0.10), transparent 60%),
+    radial-gradient(900px 460px at -8% 18%, rgba(14, 165, 233, 0.08), transparent 55%),
+    radial-gradient(700px 400px at 50% 110%, rgba(16, 185, 129, 0.06), transparent 60%);
+  background-size: 28px 28px, 28px 28px, auto, auto, auto;
   color: var(--text);
   line-height: var(--line-height);
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(9, 105, 218, 0.18);
 }
 
 img {
@@ -119,6 +130,7 @@ a:hover {
   height: 32px;
   border-radius: 8px;
   background: linear-gradient(135deg, #0550ae, var(--accent));
+  box-shadow: 0 0 14px rgba(9, 105, 218, 0.35);
   color: #fff;
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
   font-size: 13px;
@@ -1035,6 +1047,15 @@ a.tag:hover {
   letter-spacing: 0.5px;
 }
 
+@supports (background-clip: text) {
+  .hero h1 {
+    background: linear-gradient(90deg, #0969da, #06b6d4 60%, #6366f1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
 .hero-lead {
   margin-top: 10px;
   font-size: 17px;
@@ -1075,6 +1096,7 @@ a.tag:hover {
   background: var(--accent);
   color: #fff;
   border: 1px solid var(--accent);
+  box-shadow: 0 4px 14px rgba(9, 105, 218, 0.25);
 }
 
 .btn-primary:hover {
@@ -1548,6 +1570,103 @@ a.tag:hover {
 
 .remove-item:hover {
   color: #dc2626;
+}
+
+/* ---------------- 天气预报（首页） ---------------- */
+
+.weather-section {
+  margin-bottom: 48px;
+}
+
+.weather-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.weather-card {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  color: #fff;
+  padding: 18px 12px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.weather-card::after {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  pointer-events: none;
+}
+
+.weather-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.18);
+}
+
+.weather-card:nth-child(1) {
+  background: linear-gradient(160deg, #38bdf8, #0ea5e9);
+}
+
+.weather-card:nth-child(2) {
+  background: linear-gradient(160deg, #34d399, #10b981);
+}
+
+.weather-card:nth-child(3) {
+  background: linear-gradient(160deg, #818cf8, #6366f1);
+}
+
+.weather-card:nth-child(4) {
+  background: linear-gradient(160deg, #22d3ee, #0891b2);
+}
+
+.weather-card:nth-child(5) {
+  background: linear-gradient(160deg, #a3e635, #65a30d);
+}
+
+.weather-date {
+  font-size: 13px;
+  opacity: 0.95;
+}
+
+.weather-icon {
+  font-size: 38px;
+  line-height: 1;
+  margin: 8px 0 6px;
+}
+
+.weather-temp {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.weather-desc {
+  margin-top: 4px;
+  font-size: 13px;
+  opacity: 0.95;
+}
+
+/* 科技感：毛玻璃卡片 */
+
+.post-card,
+.book-card,
+.dish-card,
+.widget,
+.article-card,
+.about-card {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 /* ---------------- 响应式适配 ---------------- */
