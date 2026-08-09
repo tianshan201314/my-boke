@@ -1827,6 +1827,126 @@ a.tag:hover {
   border-color: #dc2626;
 }
 
+/* ---------------- 友情链接页 ---------------- */
+
+.links-main {
+  padding: 32px 0 64px;
+}
+
+.link-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.link-card {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.link-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.link-card:hover::before {
+  left: 130%;
+}
+
+.link-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent-soft-border);
+}
+
+.link-avatar {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: #fff;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 18px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18);
+}
+
+.avatar-1 {
+  background: linear-gradient(135deg, #38bdf8, #1d4ed8);
+}
+
+.avatar-2 {
+  background: linear-gradient(135deg, #818cf8, #4338ca);
+}
+
+.avatar-3 {
+  background: linear-gradient(135deg, #22d3ee, #0e7490);
+}
+
+.avatar-4 {
+  background: linear-gradient(135deg, #2dd4bf, #0f766e);
+}
+
+.avatar-5 {
+  background: linear-gradient(135deg, #60a5fa, #1e40af);
+}
+
+.avatar-6 {
+  background: linear-gradient(135deg, #a78bfa, #5b21b6);
+}
+
+.link-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.link-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  transition: color 0.2s ease;
+}
+
+.link-card:hover .link-name {
+  color: var(--accent);
+}
+
+.link-desc {
+  margin-top: 5px;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.link-domain {
+  margin-top: 8px;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 12px;
+  color: var(--accent);
+}
+
 /* ---------------- 在线点菜单 ---------------- */
 
 .menu-main {
@@ -2297,6 +2417,10 @@ html {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .link-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .hero-inner {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -2339,6 +2463,10 @@ html {
   }
 
   .dish-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .link-grid {
     grid-template-columns: 1fr;
   }
 

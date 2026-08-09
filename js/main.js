@@ -344,6 +344,20 @@ const WEATHER_ICONS = {
   partly: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="7.5" r="2.5"/><path d="M8 2.5V4M3.5 7.5H5M8 12.5V11M12.5 7.5H11"/><path d="M17.8 18.5a4.4 4.4 0 0 0 .3-8.8 5.2 5.2 0 0 0-9.9-1.2 3.4 3.4 0 0 0-1 6.7H17.5z"/></svg>'
 };
 
+/* ---------- 模拟友链数据（友情链接页） ---------- */
+
+const LINKS = [
+  { name: 'GitHub', url: 'https://github.com/', initial: 'G', desc: '全球最大的开源代码托管平台，几乎每天都要逛。' },
+  { name: 'MDN Web Docs', url: 'https://developer.mozilla.org/', initial: 'M', desc: '最权威的 Web 开发文档，查 API 和标准的第一站。' },
+  { name: 'Stack Overflow', url: 'https://stackoverflow.com/', initial: 'S', desc: '遇到报错先来这里，你踩过的坑基本都有人踩过。' },
+  { name: '掘金', url: 'https://juejin.cn/', initial: '掘', desc: '中文技术社区，刷文章、看面试题的常驻去处。' },
+  { name: '阮一峰的网络日志', url: 'https://www.ruanyifeng.com/blog/', initial: '阮', desc: '坚持写作十几年的技术博客，每周必读。' },
+  { name: 'CSS-Tricks', url: 'https://css-tricks.com/', initial: 'C', desc: 'CSS 技巧与前端干货，布局灵感的来源。' },
+  { name: 'Can I use', url: 'https://caniuse.com/', initial: 'C', desc: '浏览器特性兼容性查询，上线前必查。' },
+  { name: 'Vite', url: 'https://vitejs.dev/', initial: 'V', desc: '下一代前端构建工具，本站构建思路的来源。' },
+  { name: 'Dev.to', url: 'https://dev.to/', initial: 'D', desc: '海外开发者社区，观点与经验的分享地。' }
+];
+
 /* ---------- 工具函数 ---------- */
 
 function escapeHtml(str) {
@@ -564,6 +578,26 @@ function renderBooks() {
         </div>
       </div>
     </article>`).join('');
+}
+
+/* ---------- 友情链接页 ---------- */
+
+function renderLinks() {
+  const container = document.getElementById('links-list');
+  if (!container) return;
+
+  container.innerHTML = LINKS.map((link, index) => {
+    const domain = link.url.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+    return `
+      <a class="link-card" href="${escapeHtml(link.url)}" target="_blank" rel="noopener">
+        <span class="link-avatar avatar-${(index % 6) + 1}">${escapeHtml(link.initial)}</span>
+        <span class="link-body">
+          <span class="link-name">${escapeHtml(link.name)}</span>
+          <span class="link-desc">${escapeHtml(link.desc)}</span>
+          <span class="link-domain">↗ ${escapeHtml(domain)}</span>
+        </span>
+      </a>`;
+  }).join('');
 }
 
 /* ---------- 在线点菜单 ---------- */
@@ -849,6 +883,9 @@ document.addEventListener('DOMContentLoaded', () => {
         renderBooks();
       });
     }
+  }
+  if (page === 'links') {
+    renderLinks();
   }
   if (page === 'menu') {
     renderMenu();
