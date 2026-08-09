@@ -243,7 +243,7 @@ function renderPostCard(post) {
       </a>
       <div class="card-body">
         <div class="card-meta">
-          <a class="tag" href="#category=${encodeURIComponent(post.category)}">${escapeHtml(post.category)}</a>
+          <a class="tag" href="articles.html#category=${encodeURIComponent(post.category)}">${escapeHtml(post.category)}</a>
           <time datetime="${post.date}">${post.date}</time>
           <span class="read-time">${post.readTime} 分钟</span>
         </div>
@@ -297,14 +297,14 @@ function renderCategoryList() {
   const total = POSTS.length;
   const activeCategory = currentCategory !== null ? currentCategory : getHashCategory();
   const items = [
-    `<li><a href="index.html#posts" class="${activeCategory ? '' : 'active'}"><span>全部文章</span><span class="count">${total}</span></a></li>`
+    `<li><a href="articles.html#posts" class="${activeCategory ? '' : 'active'}"><span>全部文章</span><span class="count">${total}</span></a></li>`
   ];
 
   CATEGORIES.forEach((category) => {
     const count = counts[category] || 0;
     const active = activeCategory === category ? ' active' : '';
     items.push(
-      `<li><a class="${active}" href="index.html#category=${encodeURIComponent(category)}"><span>${escapeHtml(category)}</span><span class="count">${count}</span></a></li>`
+      `<li><a class="${active}" href="articles.html#category=${encodeURIComponent(category)}"><span>${escapeHtml(category)}</span><span class="count">${count}</span></a></li>`
     );
   });
 
@@ -334,6 +334,38 @@ function renderRecentList() {
 function renderSidebar() {
   renderCategoryList();
   renderRecentList();
+}
+
+/* ---------- 首页（落地页） ---------- */
+
+function renderHome() {
+  const featured = document.getElementById('featured-list');
+  if (featured) {
+    featured.innerHTML = sortByDateDesc(POSTS).slice(0, 3).map(renderPostCard).join('');
+  }
+
+  const latest = document.getElementById('latest-list');
+  if (latest) {
+    latest.innerHTML = sortByDateDesc(POSTS)
+      .slice(0, 5)
+      .map(
+        (post) => `
+          <li>
+            <a href="article.html?id=${post.id}">
+              <img class="recent-thumb" src="${post.cover}" alt="" loading="lazy">
+              <span class="recent-title">${escapeHtml(post.title)}
+                <span class="recent-date">${post.date}</span>
+              </span>
+            </a>
+          </li>`
+      )
+      .join('');
+  }
+
+  const statPosts = document.getElementById('stat-posts');
+  if (statPosts) statPosts.textContent = POSTS.length;
+  const statCats = document.getElementById('stat-cats');
+  if (statCats) statCats.textContent = CATEGORIES.length;
 }
 
 /* ---------- 文章详情页 ---------- */
@@ -407,7 +439,7 @@ function renderArticlePage() {
     <article class="article-card">
       <header class="article-header">
         <div class="article-meta">
-          <a class="tag" href="index.html#category=${encodeURIComponent(post.category)}">${escapeHtml(post.category)}</a>
+          <a class="tag" href="articles.html#category=${encodeURIComponent(post.category)}">${escapeHtml(post.category)}</a>
           <span class="author-line">
             <img src="images/avatar.svg" alt="${escapeHtml(SITE.author)}">
             ${escapeHtml(SITE.author)}
@@ -491,6 +523,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const page = document.body.dataset.page;
   if (page === 'home') {
+    renderHome();
+  }
+  if (page === 'articles') {
     applyCategoryFilter();
     window.addEventListener('hashchange', applyCategoryFilter);
   }

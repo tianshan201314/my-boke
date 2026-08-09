@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="DevLog 个人技术博客，分享前端开发、JavaScript、工程化与性能优化实战经验。">
+  <meta name="description" content="DevLog 个人技术博客：写代码，也写点技术笔记。">
   <title>DevLog - 个人技术博客</title>
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
   <link rel="stylesheet" href="css/style.css">
@@ -18,46 +18,83 @@
       </a>
       <nav class="main-nav" aria-label="主导航">
         <a href="index.html" class="nav-link active">首页</a>
-        <a href="index.html#posts" class="nav-link">文章</a>
+        <a href="articles.html" class="nav-link">文章</a>
         <a href="structure.html" class="nav-link">结构</a>
         <a href="about.html" class="nav-link">关于</a>
       </nav>
     </div>
   </header>
 
-  <main class="container page-layout">
-    <!-- 左侧：文章列表 -->
-    <section class="content-main" id="posts" aria-label="文章列表">
-      <div class="page-heading">
-        <h1>最新文章</h1>
-        <p class="page-subtitle">记录学习与实践中的每一个脚印</p>
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <img class="hero-avatar" src="images/avatar.svg" alt="林默的头像">
+        <h1>你好，我是林默</h1>
+        <p class="hero-lead">写代码，也写点技术笔记</p>
+        <p class="hero-desc">一个热爱前端开发的工程师。在这里分享 JavaScript、前端工程化、性能优化路上的思考与踩坑记录，把复杂的技术讲清楚。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="articles.html">查看文章</a>
+          <a class="btn btn-ghost" href="about.html">关于我</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><b id="stat-posts">6</b><span>篇文章</span></div>
+          <div class="hero-stat"><b id="stat-cats">4</b><span>个分类</span></div>
+          <div class="hero-stat"><b>2026</b><span>建站年份</span></div>
+        </div>
       </div>
-      <div id="article-list" class="post-list"></div>
     </section>
 
-    <!-- 右侧：侧边栏 -->
-    <aside class="sidebar" aria-label="侧边栏">
-      <section class="widget profile-card">
-        <img class="avatar" src="images/avatar.svg" alt="林默的头像">
-        <h3 class="profile-name">林默</h3>
-        <p class="profile-bio">热爱前端开发的工程师，喜欢把复杂的技术讲清楚。</p>
-        <div class="profile-links">
-          <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
-          <a href="mailto:hello@example.com">邮箱</a>
-          <a href="about.html">关于我</a>
+    <div class="container home-main">
+      <!-- 精选文章 -->
+      <section class="home-section">
+        <div class="home-section-head">
+          <h2>精选文章</h2>
+          <p class="sub">挑几篇有代表性的，从这开始读</p>
+        </div>
+        <div id="featured-list" class="featured-grid"></div>
+      </section>
+
+      <!-- 技能 -->
+      <section class="home-section">
+        <div class="home-section-head">
+          <h2>我的技能</h2>
+          <p class="sub">日常工作的技术栈</p>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">JavaScript / TypeScript</span>
+          <span class="skill-tag">Vue3</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag">CSS / 响应式布局</span>
+          <span class="skill-tag">Vite / Webpack</span>
+          <span class="skill-tag">性能优化</span>
+          <span class="skill-tag">前端工程化</span>
         </div>
       </section>
 
-      <section class="widget">
-        <h4 class="widget-title">文章分类</h4>
-        <ul id="category-list" class="category-list"></ul>
+      <!-- 最新文章 -->
+      <section class="home-section">
+        <div class="home-section-head">
+          <h2>最新文章</h2>
+          <p class="sub">最近更新的内容</p>
+        </div>
+        <ul id="latest-list" class="recent-list home-latest"></ul>
+        <div class="section-more">
+          <a class="btn btn-ghost" href="articles.html">查看全部文章</a>
+        </div>
       </section>
 
-      <section class="widget">
-        <h4 class="widget-title">最新文章</h4>
-        <ul id="recent-list" class="recent-list"></ul>
+      <!-- CTA -->
+      <section class="cta-banner">
+        <h3>对某篇文章感兴趣？</h3>
+        <p>前往文章列表，按分类浏览全部内容，或者到"关于我"页面找我聊聊。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="articles.html">浏览文章列表</a>
+          <a class="btn btn-ghost" href="about.html">联系我</a>
+        </div>
       </section>
-    </aside>
+    </div>
   </main>
 
   <footer class="site-footer">
@@ -65,7 +102,7 @@
       <p class="footer-info">© 2026 DevLog · 建站于 2026 年 8 月</p>
       <p class="footer-links">
         <a href="index.html">首页</a>
-        <a href="index.html#posts">文章</a>
+        <a href="articles.html">文章</a>
         <a href="structure.html">结构</a>
         <a href="about.html">关于</a>
       </p>
