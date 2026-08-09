@@ -134,7 +134,8 @@ my_boke/
 │   └── covers/         # 6 张文章封面图
 ├── docs/
 │   ├── AI需求文档.md    # 本文档
-│   └── DEPLOY.md       # GitHub Pages 部署指南
+│   ├── DEPLOY.md       # GitHub Pages 部署指南
+│   └── 项目结构.md      # 项目结构与文件职责说明
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml  # GitHub Pages 部署工作流
