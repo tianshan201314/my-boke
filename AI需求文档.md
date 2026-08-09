@@ -122,6 +122,8 @@ my_boke/
 ├── index.html          # 首页（文章列表 + 侧边栏）
 ├── article.html        # 文章详情页（按 URL ?id= 渲染）
 ├── about.html          # 关于我
+├── README.md           # 项目说明
+├── .gitignore          # Git 忽略规则
 ├── css/
 │   └── style.css       # 全部样式（双栏布局、响应式、代码块）
 ├── js/
@@ -130,6 +132,10 @@ my_boke/
 │   ├── avatar.svg      # 头像
 │   ├── diagram-cache.svg
 │   └── covers/         # 6 张文章封面图
+├── .github/
+│   └── workflows/
+│       └── deploy.yml  # GitHub Pages 部署工作流
+├── DEPLOY.md           # GitHub Pages 部署指南
 └── AI需求文档.md
 ```
 
