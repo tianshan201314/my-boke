@@ -512,7 +512,7 @@ function renderOrder() {
       total += subtotal;
       return `
         <tr>
-          <td>${dish.emoji} ${escapeHtml(dish.name)}</td>
+          <td>${escapeHtml(dish.name)}</td>
           <td>¥${dish.price}</td>
           <td>${qty}</td>
           <td>¥${subtotal}</td>
