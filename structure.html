@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DevLog 项目结构说明：完整目录树、文件职责与关键设计。">
+  <title>项目结构 - DevLog</title>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="structure">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <span class="logo-mark">&lt;/&gt;</span>
+        <span class="logo-name">DevLog</span>
+      </a>
+      <nav class="main-nav" aria-label="主导航">
+        <a href="index.html" class="nav-link">首页</a>
+        <a href="index.html#posts" class="nav-link">文章</a>
+        <a href="structure.html" class="nav-link active">结构</a>
+        <a href="about.html" class="nav-link">关于</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container page-layout">
+    <section class="content-main" aria-label="项目结构">
+      <article class="article-card">
+        <header class="article-header">
+          <div class="article-meta">
+            <span class="tag">项目文档</span>
+            <time datetime="2026-08-09">2026-08-09</time>
+          </div>
+          <h1>项目结构</h1>
+          <p class="page-subtitle">本站的完整目录结构与文件职责说明</p>
+        </header>
+
+        <div class="article-body">
+          <h2>一、目录树</h2>
+          <p>本站为纯前端实现（HTML + CSS + 原生 JavaScript），无框架、无构建步骤。所有源码与资源位于仓库根目录，部署配置集中在隐藏目录中。</p>
+
+          <ul class="doc-tree">
+            <li><span class="tree-icon">📁</span>my_boke/
+              <ul>
+                <li><span class="tree-icon">📄</span>index.html <span class="note">首页</span></li>
+                <li><span class="tree-icon">📄</span>article.html <span class="note">文章详情页</span></li>
+                <li><span class="tree-icon">📄</span>about.html <span class="note">关于我</span></li>
+                <li><span class="tree-icon">📄</span>structure.html <span class="note">项目结构（当前页）</span></li>
+                <li><span class="tree-icon">📁</span>css/
+                  <ul>
+                    <li><span class="tree-icon">📄</span>style.css <span class="note">全部样式</span></li>
+                  </ul>
+                </li>
+                <li><span class="tree-icon">📁</span>js/
+                  <ul>
+                    <li><span class="tree-icon">📄</span>main.js <span class="note">文章数据 + 渲染 + 交互逻辑</span></li>
+                  </ul>
+                </li>
+                <li><span class="tree-icon">📁</span>images/
+                  <ul>
+                    <li><span class="tree-icon">📄</span>avatar.svg <span class="note">博主头像</span></li>
+                    <li><span class="tree-icon">📄</span>favicon.svg <span class="note">站点图标</span></li>
+                    <li><span class="tree-icon">📄</span>diagram-cache.svg <span class="note">HTTP 缓存流程图</span></li>
+                    <li><span class="tree-icon">📁</span>covers/
+                      <ul>
+                        <li><span class="tree-icon">📄</span>cover-1 ~ cover-6.svg <span class="note">6 张文章封面</span></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li><span class="tree-icon">📁</span>docs/
+                  <ul>
+                    <li><span class="tree-icon">📄</span>AI需求文档.md <span class="note">需求与验收标准</span></li>
+                    <li><span class="tree-icon">📄</span>DEPLOY.md <span class="note">部署指南</span></li>
+                    <li><span class="tree-icon">📄</span>项目结构.md <span class="note">本文档源文件</span></li>
+                  </ul>
+                </li>
+                <li><span class="tree-icon">📄</span>README.md <span class="note">仓库项目说明</span></li>
+                <li><span class="tree-icon">📄</span>.gitignore <span class="note">Git 忽略规则</span></li>
+                <li><span class="tree-icon">📄</span>.nojekyll <span class="note">跳过 Jekyll 构建</span></li>
+                <li><span class="tree-icon">📁</span>.github/
+                  <ul>
+                    <li><span class="tree-icon">📁</span>workflows/
+                      <ul>
+                        <li><span class="tree-icon">📄</span>deploy.yml <span class="note">GitHub Actions 部署工作流</span></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <h2>二、文件职责说明</h2>
+
+          <h3>页面（根目录）</h3>
+          <table class="doc-table">
+            <thead>
+              <tr><th>文件</th><th>职责</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>index.html</code></td><td>首页：吸顶导航、文章卡片网格、侧边栏、页脚、返回顶部按钮</td></tr>
+              <tr><td><code>article.html</code></td><td>文章详情页：按 <code>?id=</code> 渲染正文、上一篇 / 下一篇导航</td></tr>
+              <tr><td><code>about.html</code></td><td>关于我：头像、自我介绍、技能标签、联系方式</td></tr>
+              <tr><td><code>structure.html</code></td><td>项目结构页（当前页）：目录树、文件职责、设计说明</td></tr>
+            </tbody>
+          </table>
+
+          <h3>样式与脚本</h3>
+          <table class="doc-table">
+            <thead>
+              <tr><th>文件</th><th>职责</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>css/style.css</code></td><td>全部样式：配色变量、双栏布局、卡片网格、代码块、响应式适配</td></tr>
+              <tr><td><code>js/main.js</code></td><td>站点核心：<code>POSTS</code> 数据数组、页面渲染、分类筛选、代码复制、返回顶部</td></tr>
+            </tbody>
+          </table>
+
+          <h3>图片资源（images/）</h3>
+          <table class="doc-table">
+            <thead>
+              <tr><th>文件</th><th>用途</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>avatar.svg</code></td><td>博主头像</td></tr>
+              <tr><td><code>favicon.svg</code></td><td>浏览器标签页图标</td></tr>
+              <tr><td><code>diagram-cache.svg</code></td><td>文章《HTTP 缓存》流程示意图</td></tr>
+              <tr><td><code>covers/cover-1 ~ 6.svg</code></td><td>六篇文章封面，与 <code>POSTS</code> 中的 <code>cover</code> 字段对应</td></tr>
+            </tbody>
+          </table>
+
+          <h3>文档（docs/）</h3>
+          <table class="doc-table">
+            <thead>
+              <tr><th>文件</th><th>职责</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>AI需求文档.md</code></td><td>需求整理、设计规范、数据模型与验收标准</td></tr>
+              <tr><td><code>DEPLOY.md</code></td><td>GitHub Pages 部署步骤与常见问题</td></tr>
+              <tr><td><code>项目结构.md</code></td><td>项目结构与文件职责说明（本页面的源文档）</td></tr>
+            </tbody>
+          </table>
+
+          <h3>配置文件</h3>
+          <table class="doc-table">
+            <thead>
+              <tr><th>文件</th><th>职责</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>.github/workflows/deploy.yml</code></td><td>推送 <code>main</code> 后自动部署到 GitHub Pages</td></tr>
+              <tr><td><code>.nojekyll</code></td><td>空文件，让 GitHub Pages 跳过 Jekyll 处理</td></tr>
+              <tr><td><code>.gitignore</code></td><td>忽略系统文件、编辑器配置、日志与临时文件</td></tr>
+              <tr><td><code>README.md</code></td><td>仓库主页展示的项目说明</td></tr>
+            </tbody>
+          </table>
+
+          <h2>三、关键设计说明</h2>
+          <ol>
+            <li><strong>数据模拟</strong>：文章全部存放在 <code>js/main.js</code> 的 <code>POSTS</code> 数组中，页面由 JavaScript 渲染；后续接入后端时只需替换数据源。</li>
+            <li><strong>相对路径</strong>：所有本地资源引用均为相对路径，部署到 GitHub Pages 子路径下也能正常工作。</li>
+            <li><strong>无外部依赖</strong>：图片与图标均为本地 SVG，页面离线可访问。</li>
+            <li><strong>组件复用</strong>：首页与文章页共用侧边栏（个人信息、分类、最新文章），由 <code>main.js</code> 统一渲染。</li>
+            <li><strong>安全</strong>：所有动态内容渲染前经过 HTML 转义，避免 XSS。</li>
+          </ol>
+        </div>
+      </article>
+    </section>
+
+    <aside class="sidebar" aria-label="侧边栏">
+      <section class="widget profile-card">
+        <img class="avatar" src="images/avatar.svg" alt="林默的头像">
+        <h3 class="profile-name">林默</h3>
+        <p class="profile-bio">热爱前端开发的工程师，喜欢把复杂的技术讲清楚。</p>
+        <div class="profile-links">
+          <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+          <a href="mailto:hello@example.com">邮箱</a>
+          <a href="about.html">关于我</a>
+        </div>
+      </section>
+
+      <section class="widget">
+        <h4 class="widget-title">文章分类</h4>
+        <ul id="category-list" class="category-list"></ul>
+      </section>
+
+      <section class="widget">
+        <h4 class="widget-title">最新文章</h4>
+        <ul id="recent-list" class="recent-list"></ul>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-info">© 2026 DevLog · 建站于 2026 年 8 月</p>
+      <p class="footer-links">
+        <a href="index.html">首页</a>
+        <a href="index.html#posts">文章</a>
+        <a href="structure.html">结构</a>
+        <a href="about.html">关于</a>
+      </p>
+      <a class="codex-badge" href="https://openai.com/codex/" target="_blank" rel="noopener" aria-label="由 Codex 驱动">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 0C12.9 6.4 17.6 11.1 24 12 17.6 12.9 12.9 17.6 12 24 11.1 17.6 6.4 12.9 0 12 6.4 11.1 11.1 6.4 12 0Z"/>
+        </svg>
+        <span>由 Codex 驱动</span>
+      </a>
+    </div>
+  </footer>
+
+  <button id="back-to-top" class="back-to-top" type="button" aria-label="返回顶部" title="返回顶部">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

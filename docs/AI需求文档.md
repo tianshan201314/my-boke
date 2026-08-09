@@ -68,6 +68,13 @@
 - 技能标签列表
 - 联系方式：邮箱、GitHub、掘金、Telegram
 
+### 4. 项目结构页 `structure.html`
+
+- 完整目录树（可视化树形结构，文件夹 / 文件图标 + 说明）
+- 按类别列出各文件职责（表格）
+- 关键设计说明
+- 导航栏"结构"链接在当前页下划线高亮
+
 ---
 
 ## 四、样式与设计规范
@@ -122,6 +129,7 @@ my_boke/
 ├── index.html          # 首页（文章列表 + 侧边栏）
 ├── article.html        # 文章详情页（按 URL ?id= 渲染）
 ├── about.html          # 关于我
+├── structure.html      # 项目结构页
 ├── README.md           # 项目说明
 ├── .gitignore          # Git 忽略规则
 ├── css/

@@ -22,6 +22,7 @@ my_boke/
 ├── index.html          # 首页（文章列表 + 侧边栏）
 ├── article.html        # 文章详情页
 ├── about.html          # 关于我
+├── structure.html      # 项目结构页
 ├── css/
 │   └── style.css       # 全部样式
 ├── js/
