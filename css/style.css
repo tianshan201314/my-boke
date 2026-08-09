@@ -1197,6 +1197,44 @@ a.tag:hover {
   margin-bottom: 28px;
 }
 
+.book-search-box {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto 28px;
+}
+
+.book-search-box .search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  color: var(--text-light);
+  pointer-events: none;
+}
+
+.book-search {
+  width: 100%;
+  padding: 11px 18px 11px 40px;
+  font-size: 14px;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-search::placeholder {
+  color: var(--text-light);
+}
+
+.book-search:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
 .book-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

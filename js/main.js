@@ -405,11 +405,23 @@ function renderHome() {
 
 /* ---------- 图书列表页 ---------- */
 
+let bookQuery = '';
+
 function renderBooks() {
   const container = document.getElementById('book-list');
   if (!container) return;
 
-  container.innerHTML = BOOKS.map((book, index) => `
+  const query = bookQuery.trim().toLowerCase();
+  const filtered = query
+    ? BOOKS.filter((book) => book.title.toLowerCase().includes(query))
+    : BOOKS;
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="list-empty">没有找到匹配的图书，换个关键词试试吧。</div>';
+    return;
+  }
+
+  container.innerHTML = filtered.map((book, index) => `
     <article class="book-card">
       <div class="book-cover book-cover-${(index % 5) + 1}"><span class="book-emoji">${book.emoji}</span></div>
       <div class="book-body">
@@ -583,6 +595,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   if (page === 'books') {
     renderBooks();
+    const searchInput = document.getElementById('book-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        bookQuery = searchInput.value;
+        renderBooks();
+      });
+    }
   }
   if (page === 'article') {
     renderArticlePage();
