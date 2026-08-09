@@ -358,6 +358,23 @@ const LINKS = [
   { name: 'Dev.to', url: 'https://dev.to/', initial: 'D', desc: '海外开发者社区，观点与经验的分享地。' }
 ];
 
+/* ---------- Hero 代码窗口内容（打字机效果） ---------- */
+
+const CODE_LINES = [
+  [{ cls: 'c-comment', text: '// 保持好奇，持续输出' }],
+  [{ cls: 'c-keyword', text: 'const' }, { text: ' developer = {' }],
+  [{ text: '  name: ' }, { cls: 'c-string', text: "'林默'" }, { text: ',' }],
+  [{ text: '  stack: [' }, { cls: 'c-string', text: "'Vue'" }, { text: ', ' }, { cls: 'c-string', text: "'React'" }, { text: ', ' }, { cls: 'c-string', text: "'Node'" }, { text: '],' }],
+  [{ text: '  blog: ' }, { cls: 'c-string', text: "'DevLog'" }, { text: ',' }],
+  [{ text: '  motto: ' }, { cls: 'c-string', text: "'把复杂讲清楚'" }, { text: ',' }],
+  [{ text: '};' }],
+  [{ text: '' }],
+  [{ cls: 'c-keyword', text: 'while' }, { text: ' (writing) {' }],
+  [{ text: '  learn();' }],
+  [{ text: '  share();' }],
+  [{ text: '}' }]
+];
+
 /* ---------- 工具函数 ---------- */
 
 function escapeHtml(str) {
@@ -531,6 +548,86 @@ function renderHome() {
   if (statPosts) statPosts.textContent = POSTS.length;
   const statCats = document.getElementById('stat-cats');
   if (statCats) statCats.textContent = CATEGORIES.length;
+}
+
+/* ---------- 首页：代码打字机 ---------- */
+
+function renderCodeWindow() {
+  const container = document.getElementById('code-lines');
+  if (!container) return;
+
+  container.innerHTML = CODE_LINES.map((line) => {
+    const tokens = line
+      .map((token) => (token.cls ? `<span class="${token.cls}">${escapeHtml(token.text)}</span>` : escapeHtml(token.text)))
+      .join('');
+    return `<div class="code-line">${tokens}</div>`;
+  }).join('');
+
+  const lines = container.querySelectorAll('.code-line');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    lines.forEach((el) => el.classList.add('shown'));
+    return;
+  }
+  lines.forEach((el, index) => {
+    setTimeout(() => el.classList.add('shown'), 280 + index * 110);
+  });
+}
+
+/* ---------- 全站动效：视差 / 3D 倾斜 / 数字滚动 ---------- */
+
+function initHeroParallax() {
+  const hero = document.querySelector('.hero');
+  const space = document.querySelector('.hero-space');
+  const visual = document.querySelector('.hero-visual');
+  if (!hero || (!space && !visual)) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  hero.addEventListener('mousemove', (e) => {
+    const x = e.clientX / window.innerWidth - 0.5;
+    const y = e.clientY / window.innerHeight - 0.5;
+    if (space) space.style.transform = `translate(${x * -20}px, ${y * -14}px)`;
+    if (visual) visual.style.transform = `translate(${x * 12}px, ${y * 8}px)`;
+  });
+  hero.addEventListener('mouseleave', () => {
+    if (space) space.style.transform = '';
+    if (visual) visual.style.transform = '';
+  });
+}
+
+let tiltCard = null;
+
+function initCardTilt() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(hover: none)').matches) return;
+
+  document.addEventListener('mousemove', (e) => {
+    const card = e.target.closest('.post-card, .book-card, .dish-card, .link-card, .weather-card');
+    if (card !== tiltCard) {
+      if (tiltCard) tiltCard.style.transform = '';
+      tiltCard = card;
+    }
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `perspective(900px) rotateY(${px * 8}deg) rotateX(${-py * 8}deg) translateY(-5px)`;
+  });
+}
+
+function initStatCounters() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('.hero-stat b').forEach((el) => {
+    const target = parseInt(el.textContent, 10);
+    if (Number.isNaN(target)) return;
+    const duration = 900;
+    const start = performance.now();
+    const step = (now) => {
+      const p = Math.min((now - start) / duration, 1);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
 }
 
 /* ---------- 图书列表页 ---------- */
@@ -898,6 +995,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const page = document.body.dataset.page;
   if (page === 'home') {
     renderHome();
+    renderCodeWindow();
+    initStatCounters();
   }
   if (page === 'articles') {
     applyCategoryFilter();
@@ -923,6 +1022,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (page === 'article') {
     renderArticlePage();
   }
+
+  initHeroParallax();
+  initCardTilt();
 
   // 滚动浮现动画
   const revealItems = document.querySelectorAll('[data-reveal]');

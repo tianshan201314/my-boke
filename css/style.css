@@ -1272,6 +1272,7 @@ a.tag:hover {
   inset: 0;
   pointer-events: none;
   overflow: hidden;
+  will-change: transform;
 }
 
 .star {
@@ -1513,6 +1514,7 @@ a.tag:hover {
 
 .hero-visual {
   position: relative;
+  will-change: transform;
 }
 
 .code-window {
@@ -1577,6 +1579,17 @@ a.tag:hover {
   line-height: 1.8;
   color: #e2e8f0;
   overflow-x: auto;
+}
+
+.code-line {
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.code-line.shown {
+  opacity: 1;
+  transform: none;
 }
 
 .c-keyword {
@@ -2236,6 +2249,21 @@ a.tag:hover {
 /* ---------------- 设计增强：科技感与艺术感 ---------------- */
 
 /* 滚动浮现动画 */
+
+main {
+  animation: pageIn 0.45s ease both;
+}
+
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
 
 [data-reveal] {
   opacity: 0;
