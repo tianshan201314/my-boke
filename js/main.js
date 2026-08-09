@@ -281,35 +281,35 @@ const BOOKS = [
     title: 'JavaScript 高级程序设计（第 4 版）',
     author: '马特·弗里斯比',
     desc: 'JavaScript 开发者案头必备的权威指南，覆盖语言核心与最新特性。',
-    emoji: '📕'
+    code: 'JS'
   },
   {
     id: 'css-secrets',
     title: 'CSS 揭秘',
     author: 'Lea Verou',
     desc: '47 个实用技巧，带你重新认识 CSS 的可能性。',
-    emoji: '📘'
+    code: 'CSS'
   },
   {
     id: 'csapp',
     title: '深入理解计算机系统（原书第 3 版）',
     author: "Randal E. Bryant / David R. O'Hallaron",
     desc: '从程序员视角理解计算机底层，构建完整知识体系。',
-    emoji: '📗'
+    code: 'CS'
   },
   {
     id: 'clean-code',
     title: '代码整洁之道',
     author: 'Robert C. Martin',
     desc: '如何写出易读、易维护的代码，软件工程师必读。',
-    emoji: '📙'
+    code: 'CC'
   },
   {
     id: 'design-patterns',
     title: '设计模式：可复用面向对象软件的基础',
     author: 'Erich Gamma 等',
     desc: '四位作者合著的经典之作，23 种设计模式的源头。',
-    emoji: '📓'
+    code: 'DP'
   }
 ];
 
@@ -329,12 +329,20 @@ const MENU = [
 /* ---------- 模拟天气数据（首页天气预报） ---------- */
 
 const WEATHER_DAYS = [
-  { icon: '☀️', high: 33, low: 26, desc: '晴' },
-  { icon: '⛅', high: 31, low: 25, desc: '多云' },
-  { icon: '🌧️', high: 27, low: 23, desc: '小雨' },
-  { icon: '⛈️', high: 26, low: 22, desc: '雷阵雨' },
-  { icon: '🌤️', high: 29, low: 24, desc: '多云转晴' }
+  { icon: 'sun', high: 33, low: 26, desc: '晴' },
+  { icon: 'cloudy', high: 31, low: 25, desc: '多云' },
+  { icon: 'rain', high: 27, low: 23, desc: '小雨' },
+  { icon: 'storm', high: 26, low: 22, desc: '雷阵雨' },
+  { icon: 'partly', high: 29, low: 24, desc: '多云转晴' }
 ];
+
+const WEATHER_ICONS = {
+  sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/></svg>',
+  cloudy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="9" r="2.8"/><path d="M17.8 18.5a4.4 4.4 0 0 0 .3-8.8 5.2 5.2 0 0 0-9.9-1.2 3.4 3.4 0 0 0-1 6.7H17.5z"/></svg>',
+  rain: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 16.5a4.4 4.4 0 0 0 .3-8.8 5.2 5.2 0 0 0-9.9-1.2 3.4 3.4 0 0 0-1 6.7h9.4z"/><path d="M8.2 16.5l-1 2M12.2 16.5l-1 2M16.2 16.5l-1 2"/></svg>',
+  storm: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 15.5a4.4 4.4 0 0 0 .3-8.8 5.2 5.2 0 0 0-9.9-1.2 3.4 3.4 0 0 0-1 6.7h9.4z"/><path d="M12.2 15.5L10 19.5h2.4L10.8 23"/></svg>',
+  partly: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="7.5" r="2.5"/><path d="M8 2.5V4M3.5 7.5H5M8 12.5V11M12.5 7.5H11"/><path d="M17.8 18.5a4.4 4.4 0 0 0 .3-8.8 5.2 5.2 0 0 0-9.9-1.2 3.4 3.4 0 0 0-1 6.7H17.5z"/></svg>'
+};
 
 /* ---------- 工具函数 ---------- */
 
@@ -475,7 +483,7 @@ function renderHome() {
       return `
         <div class="weather-card">
           <div class="weather-date">${label} · ${weekdays[d.getDay()]}</div>
-          <div class="weather-icon">${day.icon}</div>
+          <div class="weather-icon">${WEATHER_ICONS[day.icon] || ''}</div>
           <div class="weather-temp">${day.high}° / ${day.low}°</div>
           <div class="weather-desc">${escapeHtml(day.desc)}</div>
         </div>`;
@@ -544,7 +552,7 @@ function renderBooks() {
 
   container.innerHTML = filtered.map((book, index) => `
     <article class="book-card">
-      <div class="book-cover book-cover-${(index % 5) + 1}"><span class="book-emoji">${book.emoji}</span></div>
+      <div class="book-cover book-cover-${(index % 5) + 1}"><span class="book-code">${escapeHtml(book.code)}</span></div>
       <div class="book-body">
         <h3 class="book-title">${escapeHtml(book.title)}</h3>
         <p class="book-author">${escapeHtml(book.author)}</p>

@@ -38,12 +38,26 @@
         <span class="star s5"></span>
         <span class="star s6"></span>
         <span class="planet"><i class="planet-ring"></i></span>
-        <span class="astro">🧑‍🚀</span>
-        <span class="rocket">🚀</span>
+        <span class="holo-globe"></span>
+        <span class="orbit-system">
+          <span class="orbit o1"></span>
+          <span class="orbit o2"></span>
+          <span class="orbit-track"><i class="orbit-dot"></i></span>
+          <svg class="constellation" viewBox="0 0 200 150" fill="none">
+            <path d="M18 128 L52 36 L92 92 L138 26 L178 118" stroke="rgba(125,211,252,0.45)" stroke-width="1"/>
+            <path d="M52 36 L92 92 L138 26" stroke="rgba(165,180,252,0.28)" stroke-width="1"/>
+            <circle cx="18" cy="128" r="2.5" fill="#7dd3fc"/>
+            <circle cx="52" cy="36" r="2.5" fill="#a5b4fc"/>
+            <circle cx="92" cy="92" r="3" fill="#67e8f9"/>
+            <circle cx="138" cy="26" r="2.5" fill="#c4b5fd"/>
+            <circle cx="178" cy="118" r="2.5" fill="#7dd3fc"/>
+          </svg>
+        </span>
       </div>
       <div class="container hero-inner">
         <div class="hero-text">
           <img class="hero-avatar" src="images/avatar.svg" alt="林默的头像">
+          <span class="hero-eyebrow">DEVLOG // SYSTEM</span>
           <h1>你好，我是林默</h1>
           <p class="hero-lead">写代码，也写点技术笔记</p>
           <p class="hero-desc">一个热爱前端开发的工程师。在这里分享 JavaScript、前端工程化与性能优化的思考与踩坑记录，也聊聊书单、天气和生活的碎片，把复杂的技术讲清楚。</p>
@@ -78,11 +92,12 @@
   share();
 }<span class="cursor"></span></code></pre>
           </div>
-          <span class="hero-chip"><i class="pulse-dot"></i>在线 · 持续更新中</span>
+          <span class="hero-chip"><i class="sys-dot"></i>SYS.ONLINE · 持续更新中</span>
         </div>
       </div>
       <a class="hero-scroll" href="#weather" aria-label="向下滚动">
-        <span class="mouse"><i></i></span>
+        <span class="scroll-line"><i></i></span>
+        <span class="scroll-text">SCROLL</span>
       </a>
     </section>
 
@@ -90,6 +105,7 @@
       <!-- 天气预报 -->
       <section class="home-section weather-section" id="weather" data-reveal>
         <div class="home-section-head">
+          <span class="section-eyebrow">01 // WEATHER</span>
           <h2>天气预报</h2>
           <p class="sub">未来 5 天 · 模拟数据</p>
         </div>
@@ -99,6 +115,7 @@
       <!-- 精选文章 -->
       <section class="home-section" data-reveal>
         <div class="home-section-head">
+          <span class="section-eyebrow">02 // FEATURED</span>
           <h2>精选文章</h2>
           <p class="sub">挑几篇有代表性的，从这开始读</p>
         </div>
@@ -108,6 +125,7 @@
       <!-- 技能 -->
       <section class="home-section" data-reveal>
         <div class="home-section-head">
+          <span class="section-eyebrow">03 // STACK</span>
           <h2>我的技能</h2>
           <p class="sub">日常工作的技术栈</p>
         </div>
@@ -126,6 +144,7 @@
       <!-- 最新文章 -->
       <section class="home-section" data-reveal>
         <div class="home-section-head">
+          <span class="section-eyebrow">04 // LATEST</span>
           <h2>最新文章</h2>
           <p class="sub">最近更新的内容</p>
         </div>

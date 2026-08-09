@@ -30,13 +30,17 @@
   <main>
     <section class="title-bar">
       <div class="container">
+        <span class="section-eyebrow">// LIBRARY</span>
         <h1>我的图书收藏</h1>
         <p class="title-bar-sub">5 本技术人值得一读的好书</p>
       </div>
     </section>
     <div class="container books-main">
     <div class="book-search-box" data-reveal>
-      <span class="search-icon" aria-hidden="true">🔍</span>
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/>
+        <path d="M21 21l-4.35-4.35"/>
+      </svg>
       <input type="search" id="book-search" class="book-search" placeholder="输入书名关键词，如：JavaScript" aria-label="搜索图书">
     </div>
     <div id="book-list" class="book-grid" data-reveal></div>
