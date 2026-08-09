@@ -1401,32 +1401,12 @@ a.tag:hover {
   border-color: var(--accent-soft-border);
 }
 
-.dish-cover {
-  height: 92px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.dish-cover-1 {
-  background: linear-gradient(135deg, #ffedd5, #fdba74);
-}
-
-.dish-cover-2 {
-  background: linear-gradient(135deg, #fef2f2, #fca5a5);
-}
-
-.dish-cover-3 {
-  background: linear-gradient(135deg, #fef9c3, #fde047);
-}
-
-.dish-cover-4 {
-  background: linear-gradient(135deg, #ecfdf5, #6ee7b7);
-}
-
-.dish-emoji {
-  font-size: 40px;
-  line-height: 1;
+.dish-img {
+  width: 200px;
+  height: 150px;
+  margin: 16px auto 0;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
 }
 
 .dish-body {

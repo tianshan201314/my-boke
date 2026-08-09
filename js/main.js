@@ -254,14 +254,14 @@ const BOOKS = [
 /* ---------- 模拟菜单数据（在线点菜单页） ---------- */
 
 const MENU = [
-  { id: 'gongbao-jiding', name: '宫保鸡丁', price: 28, desc: '经典川菜，鸡丁嫩滑，花生香脆，微辣下饭。', emoji: '🥘' },
-  { id: 'yuxiang-rous', name: '鱼香肉丝', price: 26, desc: '咸甜酸辣兼备，肉丝配木耳笋丝，超级下饭。', emoji: '🥢' },
-  { id: 'mapo-doufu', name: '麻婆豆腐', price: 22, desc: '麻辣鲜香，嫩豆腐配上肉末与豆瓣酱。', emoji: '🌶️' },
-  { id: 'tangcu-liji', name: '糖醋里脊', price: 32, desc: '外酥里嫩，酸甜适口，大人小孩都爱。', emoji: '🍖' },
-  { id: 'qingchao-shishu', name: '清炒时蔬', price: 18, desc: '当季蔬菜，清淡爽口，解腻首选。', emoji: '🥬' },
-  { id: 'suanla-tudousi', name: '酸辣土豆丝', price: 16, desc: '酸辣开胃，土豆丝爽脆，下饭神器。', emoji: '🥔' },
-  { id: 'fanqie-dantang', name: '番茄鸡蛋汤', price: 12, desc: '家常味道，番茄酸甜，鸡蛋滑嫩。', emoji: '🍅' },
-  { id: 'yangzhou-chaofan', name: '扬州炒饭', price: 20, desc: '粒粒分明，虾仁、火腿、鸡蛋配料丰富。', emoji: '🍚' }
+  { id: 'gongbao-jiding', name: '宫保鸡丁', price: 28, desc: '经典川菜，鸡丁嫩滑，花生香脆，微辣下饭。' },
+  { id: 'yuxiang-rous', name: '鱼香肉丝', price: 26, desc: '咸甜酸辣兼备，肉丝配木耳笋丝，超级下饭。' },
+  { id: 'mapo-doufu', name: '麻婆豆腐', price: 22, desc: '麻辣鲜香，嫩豆腐配上肉末与豆瓣酱。' },
+  { id: 'tangcu-liji', name: '糖醋里脊', price: 32, desc: '外酥里嫩，酸甜适口，大人小孩都爱。' },
+  { id: 'qingchao-shishu', name: '清炒时蔬', price: 18, desc: '当季蔬菜，清淡爽口，解腻首选。' },
+  { id: 'suanla-tudousi', name: '酸辣土豆丝', price: 16, desc: '酸辣开胃，土豆丝爽脆，下饭神器。' },
+  { id: 'fanqie-dantang', name: '番茄鸡蛋汤', price: 12, desc: '家常味道，番茄酸甜，鸡蛋滑嫩。' },
+  { id: 'yangzhou-chaofan', name: '扬州炒饭', price: 20, desc: '粒粒分明，虾仁、火腿、鸡蛋配料丰富。' }
 ];
 
 /* ---------- 工具函数 ---------- */
@@ -476,11 +476,11 @@ function renderMenu() {
   const container = document.getElementById('menu-list');
   if (!container) return;
 
-  container.innerHTML = MENU.map((dish, index) => {
+  container.innerHTML = MENU.map((dish) => {
     const qty = order.get(dish.id) || 0;
     return `
       <article class="dish-card">
-        <div class="dish-cover dish-cover-${(index % 4) + 1}"><span class="dish-emoji">${dish.emoji}</span></div>
+        <img class="dish-img" src="images/placeholder.svg" alt="菜品图片占位" loading="lazy">
         <div class="dish-body">
           <h3 class="dish-name">${escapeHtml(dish.name)}</h3>
           <p class="dish-desc">${escapeHtml(dish.desc)}</p>
