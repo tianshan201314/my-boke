@@ -176,7 +176,7 @@ my_boke/
 │   ├── avatar.svg      # 头像
 │   ├── diagram-cache.svg
 │   ├── placeholder.svg # 菜品占位图
-│   └── covers/         # 6 张文章封面图
+│   └── covers/         # 8 张文章封面图
 ├── docs/
 │   ├── AI需求文档.md    # 本文档
 │   ├── DEPLOY.md       # GitHub Pages 部署指南

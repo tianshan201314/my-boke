@@ -208,6 +208,68 @@ const POSTS = [
       { type: 'p', text: 'await 后面的代码相当于被放进了 then 回调，因此同样遵守微任务规则。理解这一点，很多"反直觉"的执行顺序问题都能迎刃而解。' },
       { type: 'quote', text: '当你把异步代码的执行顺序画成一张时间线，面试题就变成了送分题。' }
     ]
+  },
+  {
+    id: 'responsive-design-guide',
+    title: '响应式设计实践：从媒体查询到容器查询',
+    summary: '响应式设计正在从"以视口为中心"走向"以容器为中心"。本文对比媒体查询与容器查询的适用场景，用一个实际组件演示从断点设计到容器感知布局的迁移过程，并给出实用建议。',
+    date: '2026-07-25',
+    category: '前端开发',
+    tags: ['CSS', '响应式', '实践'],
+    cover: 'images/covers/cover-7.svg',
+    readTime: 8,
+    content: [
+      { type: 'h2', text: '从视口到容器' },
+      { type: 'p', text: '媒体查询以整个视口为参照，适合页面级布局；但组件常被嵌入到不同宽度的区域，这时容器查询能根据父容器尺寸自适应，逻辑更内聚。' },
+      {
+        type: 'code',
+        lang: 'css',
+        code: ".card-list {\n  container-type: inline-size;\n  display: grid;\n  gap: 16px;\n}\n\n@container (min-width: 420px) {\n  .card-list {\n    grid-template-columns: repeat(2, 1fr);\n  }\n}\n\n@container (min-width: 720px) {\n  .card-list {\n    grid-template-columns: repeat(3, 1fr);\n  }\n}"
+      },
+      { type: 'h2', text: '容器查询的三个注意点' },
+      {
+        type: 'list',
+        items: [
+          'container-type: inline-size 会让元素成为新的包含块，注意子元素定位',
+          '与媒体查询搭配使用：页面骨架用媒体查询，组件内部用容器查询',
+          '浏览器支持已覆盖主流环境，可以渐进增强使用'
+        ]
+      },
+      { type: 'quote', text: '好的响应式不是"每个断点都调一遍"，而是让组件自己适应它所在的空间。' },
+      { type: 'h2', text: '迁移建议' },
+      { type: 'p', text: '先从"宽高比固定、布局密度随宽度变化"的组件开始迁移，收益最明显，风险也最小。' }
+    ]
+  },
+  {
+    id: 'vue3-composables-pinia',
+    title: 'Vue 3 组合式 API 实战：从 setup 到 Pinia',
+    summary: '组合式 API 让逻辑复用和状态组织变得更清晰。本文从 setup 语法讲起，逐步演示自定义组合函数与 Pinia 状态管理的配合方式，并总结团队实践中的分层约定。',
+    date: '2026-07-05',
+    category: '工程化',
+    tags: ['Vue3', 'Pinia', '工程化'],
+    cover: 'images/covers/cover-8.svg',
+    readTime: 9,
+    content: [
+      { type: 'h2', text: 'setup 之后发生了什么' },
+      { type: 'p', text: 'setup 在组件实例创建前执行，返回的响应式状态与函数会暴露给模板。相比 Options API，逻辑按功能聚合，而不是按 data / computed / methods 分散。' },
+      {
+        type: 'code',
+        lang: 'js',
+        code: "import { ref, computed } from 'vue'\n\nexport function useCounter(initial = 0) {\n  const count = ref(initial)\n  const double = computed(() => count.value * 2)\n  const increment = () => { count.value += 1 }\n  return { count, double, increment }\n}"
+      },
+      { type: 'h2', text: '什么时候用 Pinia' },
+      {
+        type: 'list',
+        items: [
+          '多组件共享同一份状态时',
+          '需要持久化、跨页签同步等能力时',
+          '状态逻辑较复杂，希望与组件解耦时'
+        ]
+      },
+      { type: 'h2', text: '团队分层约定' },
+      { type: 'p', text: '建议按"页面组件 → 组合函数 → Store"三层组织：组件只负责展示与交互，组合函数封装可复用的业务逻辑，Store 管理跨组件的共享状态。这样代码边界清晰，测试也更方便。' },
+      { type: 'quote', text: '组合式 API 最大的价值不是语法新，而是让"逻辑"成为可以独立组织和测试的一等公民。' }
+    ]
   }
 ];
 
@@ -625,7 +687,7 @@ function renderArticlePage() {
     </nav>`;
 
   container.innerHTML = `
-    <article class="article-card">
+    <article class="article-card" data-reveal>
       <header class="article-header">
         <div class="article-meta">
           <a class="tag" href="articles.html#category=${encodeURIComponent(post.category)}">${escapeHtml(post.category)}</a>
@@ -757,5 +819,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   if (page === 'article') {
     renderArticlePage();
+  }
+
+  // 滚动浮现动画
+  const revealItems = document.querySelectorAll('[data-reveal]');
+  if (revealItems.length) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      revealItems.forEach((el) => el.classList.add('revealed'));
+    } else {
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+      revealItems.forEach((el) => revealObserver.observe(el));
+    }
   }
 });

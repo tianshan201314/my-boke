@@ -231,6 +231,7 @@ a:hover {
 }
 
 .post-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: var(--card-bg);
@@ -1278,6 +1279,7 @@ a.tag:hover {
 }
 
 .book-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: var(--card-bg);
@@ -1407,6 +1409,7 @@ a.tag:hover {
 }
 
 .dish-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: var(--card-bg);
@@ -1570,6 +1573,129 @@ a.tag:hover {
 
 .remove-item:hover {
   color: #dc2626;
+}
+
+/* ---------------- 设计增强：科技感与艺术感 ---------------- */
+
+/* 滚动浮现动画 */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* 背景漂浮光晕 */
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+body::before {
+  width: 420px;
+  height: 420px;
+  top: -120px;
+  right: -100px;
+  background: rgba(59, 130, 246, 0.16);
+  animation: orbFloat 18s ease-in-out infinite alternate;
+}
+
+body::after {
+  width: 360px;
+  height: 360px;
+  bottom: -100px;
+  left: -120px;
+  background: rgba(16, 185, 129, 0.12);
+  animation: orbFloat 22s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes orbFloat {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(40px, 30px) scale(1.12);
+  }
+}
+
+/* 卡片流光扫过效果 */
+
+.post-card::before,
+.book-card::before,
+.dish-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.post-card:hover::before,
+.book-card:hover::before,
+.dish-card:hover::before {
+  left: 130%;
+}
+
+/* 按钮按压反馈 */
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Hero 统计数字渐变 */
+
+.hero-stat b {
+  color: var(--accent-dark);
+}
+
+@supports (background-clip: text) {
+  .hero-stat b {
+    background: linear-gradient(90deg, #0969da, #06b6d4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* 自定义滚动条 */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+html {
+  scrollbar-color: #cbd5e1 #f1f5f9;
+  scrollbar-width: thin;
 }
 
 /* ---------------- 天气预报（首页） ---------------- */
