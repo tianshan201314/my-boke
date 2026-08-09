@@ -8,6 +8,7 @@
 :root {
   --bg: #ffffff;
   --text: #333333;
+  --text-soft: #3f3f46;
   --text-muted: #6b7280;
   --text-light: #9ca3af;
   --accent: #0969da;
@@ -15,7 +16,16 @@
   --accent-soft: #ddf4ff;
   --accent-soft-border: #b6e3ff;
   --card-bg: #f9fafb;
+  --card-glass: rgba(255, 255, 255, 0.78);
   --border: #d0d7de;
+  --header-bg: rgba(246, 248, 250, 0.92);
+  --titlebar-bg: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+  --input-bg: #ffffff;
+  --btn-ghost-bg: #ffffff;
+  --code-inline-bg: #f3f4f6;
+  --table-stripe: #f9fafb;
+  --scroll-track: #f1f5f9;
+  --scroll-thumb: #cbd5e1;
   --code-bg: #1f2937;
   --code-text: #e5e7eb;
   --radius: 12px;
@@ -27,6 +37,30 @@
     "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
   --container-w: 1120px;
   --line-height: 1.7;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b1220;
+  --text: #e2e8f0;
+  --text-soft: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-light: #64748b;
+  --accent: #60a5fa;
+  --accent-dark: #93c5fd;
+  --accent-soft: rgba(96, 165, 250, 0.14);
+  --accent-soft-border: rgba(96, 165, 250, 0.35);
+  --card-bg: #111a2e;
+  --card-glass: rgba(17, 26, 46, 0.72);
+  --border: #1e293b;
+  --header-bg: rgba(11, 18, 32, 0.85);
+  --titlebar-bg: linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
+  --input-bg: #0f172a;
+  --btn-ghost-bg: rgba(255, 255, 255, 0.05);
+  --code-inline-bg: #1e293b;
+  --table-stripe: rgba(148, 163, 184, 0.06);
+  --scroll-track: #0f172a;
+  --scroll-thumb: #334155;
 }
 
 * {
@@ -92,7 +126,7 @@ a:hover {
   right: 0;
   width: 100%;
   z-index: 50;
-  background: rgba(246, 248, 250, 0.92);
+  background: var(--header-bg);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
   transition: box-shadow 0.2s ease;
@@ -183,6 +217,49 @@ a:hover {
 .nav-link.active::after {
   background: var(--accent);
   transform: scaleX(1);
+}
+
+.header-right {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  align-self: center;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--btn-ghost-bg);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent-soft-border);
+}
+
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.theme-toggle .icon-sun {
+  display: none;
+}
+
+html[data-theme="dark"] .theme-toggle .icon-sun {
+  display: block;
+}
+
+html[data-theme="dark"] .theme-toggle .icon-moon {
+  display: none;
 }
 
 /* ---------------- 页面主体：双栏布局 ---------------- */
@@ -432,7 +509,7 @@ a.tag:hover {
 }
 
 .category-list li a:hover {
-  background: #fff;
+  background: var(--btn-ghost-bg);
   color: var(--accent);
 }
 
@@ -445,7 +522,7 @@ a.tag:hover {
 .category-list .count {
   font-size: 12px;
   color: var(--text-light);
-  background: #fff;
+  background: var(--bg);
   border-radius: 999px;
   padding: 1px 8px;
 }
@@ -576,7 +653,7 @@ a.tag:hover {
 
 .article-body p {
   margin: 14px 0;
-  color: #3f3f46;
+  color: var(--text-soft);
 }
 
 .article-body ul,
@@ -618,7 +695,7 @@ a.tag:hover {
   line-height: 1.9;
   margin: 16px 0;
   padding: 18px 20px;
-  background: #fff;
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   overflow-x: auto;
@@ -668,7 +745,7 @@ a.tag:hover {
   padding: 8px 12px;
   border: 1px solid var(--border);
   vertical-align: top;
-  color: #3f3f46;
+  color: var(--text-soft);
 }
 
 .doc-table tr:nth-child(even) td {
@@ -677,7 +754,7 @@ a.tag:hover {
 
 .doc-table code {
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-  background: #f3f4f6;
+  background: var(--code-inline-bg);
   padding: 1px 6px;
   border-radius: 4px;
   font-size: 13px;
@@ -862,7 +939,7 @@ a.tag:hover {
 .about-intro {
   margin-top: 26px;
   text-align: left;
-  color: #3f3f46;
+  color: var(--text-soft);
 }
 
 .about-intro p {
@@ -911,7 +988,7 @@ a.tag:hover {
   align-items: center;
   gap: 10px;
   padding: 10px 14px;
-  background: #fff;
+  background: var(--btn-ghost-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   font-size: 14px;
@@ -971,7 +1048,7 @@ a.tag:hover {
   padding: 5px 12px;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--btn-ghost-bg);
   color: var(--text-muted);
   font-size: 12px;
   font-weight: 500;
@@ -1147,7 +1224,7 @@ a.tag:hover {
 }
 
 .btn-ghost {
-  background: #fff;
+  background: var(--btn-ghost-bg);
   color: var(--text);
   border: 1px solid var(--border);
 }
@@ -1641,7 +1718,7 @@ a.tag:hover {
 .title-bar {
   text-align: center;
   padding: 44px 0 36px;
-  background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+  background: var(--titlebar-bg);
   border-bottom: 1px solid var(--border);
 }
 
@@ -1686,7 +1763,7 @@ a.tag:hover {
   color: var(--text);
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: #fff;
+  background: var(--input-bg);
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -1781,7 +1858,7 @@ a.tag:hover {
 .book-desc {
   margin-top: 10px;
   font-size: 14px;
-  color: #3f3f46;
+  color: var(--text-soft);
   line-height: 1.7;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -1804,7 +1881,7 @@ a.tag:hover {
   font-size: 13px;
   font-weight: 600;
   color: var(--accent);
-  background: #fff;
+  background: var(--btn-ghost-bg);
   border: 1px solid var(--accent-soft-border);
   border-radius: 999px;
   cursor: pointer;
@@ -1845,7 +1922,7 @@ a.tag:hover {
   gap: 14px;
   align-items: flex-start;
   padding: 18px;
-  background: rgba(255, 255, 255, 0.78);
+  background: var(--card-glass);
   backdrop-filter: blur(10px);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -2102,7 +2179,7 @@ a.tag:hover {
 
 .order-table-wrap {
   overflow-x: auto;
-  background: #fff;
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
 }
@@ -2128,7 +2205,7 @@ a.tag:hover {
 }
 
 .order-table tbody tr:nth-child(even) td {
-  background: var(--card-bg);
+  background: var(--table-stripe);
 }
 
 .order-table .order-total-row td {
@@ -2277,11 +2354,11 @@ body::after {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: var(--scroll-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: var(--scroll-thumb);
   border-radius: 5px;
 }
 
@@ -2290,8 +2367,21 @@ body::after {
 }
 
 html {
-  scrollbar-color: #cbd5e1 #f1f5f9;
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
   scrollbar-width: thin;
+}
+
+/* 暗色主题细节 */
+
+html[data-theme="dark"] .fav-btn.faved {
+  color: #f87171;
+  background: rgba(220, 38, 38, 0.12);
+  border-color: rgba(220, 38, 38, 0.35);
+}
+
+html[data-theme="dark"] .fav-btn.faved:hover {
+  background: rgba(220, 38, 38, 0.2);
+  border-color: #f87171;
 }
 
 /* ---------------- 天气预报（首页） ---------------- */
@@ -2392,7 +2482,7 @@ html {
 .widget,
 .article-card,
 .about-card {
-  background: rgba(255, 255, 255, 0.78);
+  background: var(--card-glass);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -2512,8 +2602,17 @@ html {
   }
 
   .nav-link {
-    padding: 0 10px;
-    font-size: 14px;
+    padding: 0 8px;
+    font-size: 13px;
+  }
+
+  .header-right {
+    gap: 6px;
+  }
+
+  .theme-toggle {
+    width: 32px;
+    height: 32px;
   }
 
   .page-heading h1 {

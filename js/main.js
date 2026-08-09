@@ -836,6 +836,35 @@ document.addEventListener('click', (event) => {
   }
 });
 
+/* ---------- 主题切换（白 / 黑） ---------- */
+
+function initTheme() {
+  const root = document.documentElement;
+  let stored = null;
+  try {
+    stored = localStorage.getItem('devlog-theme');
+  } catch (err) {
+    stored = null;
+  }
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = stored === 'dark' || stored === 'light' ? stored : prefersDark ? 'dark' : 'light';
+
+  const toggle = document.getElementById('theme-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem('devlog-theme', next);
+      } catch (err) {
+        // 忽略存储失败
+      }
+    });
+  }
+}
+
+initTheme();
+
 /* ---------- 初始化 ---------- */
 
 document.addEventListener('DOMContentLoaded', () => {
