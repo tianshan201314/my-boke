@@ -1188,13 +1188,27 @@ a.tag:hover {
 
 /* ---------------- 图书列表页 ---------------- */
 
-.books-main {
-  padding: 36px 0 64px;
+.title-bar {
+  text-align: center;
+  padding: 44px 0 36px;
+  background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+  border-bottom: 1px solid var(--border);
 }
 
-.books-heading {
-  text-align: center;
-  margin-bottom: 28px;
+.title-bar h1 {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.title-bar .title-bar-sub {
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+.books-main {
+  padding: 32px 0 64px;
 }
 
 .book-search-box {
@@ -1402,6 +1416,14 @@ a.tag:hover {
 
   .book-grid {
     grid-template-columns: 1fr;
+  }
+
+  .title-bar {
+    padding: 34px 0 28px;
+  }
+
+  .title-bar h1 {
+    font-size: 26px;
   }
 
   .hero {

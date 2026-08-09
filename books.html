@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="DevLog 图书列表：5 本值得一读的技术好书。">
-  <title>图书列表 - DevLog</title>
+  <title>我的图书收藏 - DevLog</title>
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -26,16 +26,20 @@
     </div>
   </header>
 
-  <main class="container books-main">
-    <div class="page-heading books-heading">
-      <h1>图书列表</h1>
-      <p class="page-subtitle">5 本技术人值得一读的好书</p>
-    </div>
+  <main>
+    <section class="title-bar">
+      <div class="container">
+        <h1>我的图书收藏</h1>
+        <p class="title-bar-sub">5 本技术人值得一读的好书</p>
+      </div>
+    </section>
+    <div class="container books-main">
     <div class="book-search-box">
       <span class="search-icon" aria-hidden="true">🔍</span>
       <input type="search" id="book-search" class="book-search" placeholder="输入书名关键词，如：JavaScript" aria-label="搜索图书">
     </div>
     <div id="book-list" class="book-grid"></div>
+    </div>
   </main>
 
   <footer class="site-footer">
