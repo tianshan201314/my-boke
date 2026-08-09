@@ -1186,6 +1186,118 @@ a.tag:hover {
   font-size: 14px;
 }
 
+/* ---------------- 图书列表页 ---------------- */
+
+.books-main {
+  padding: 36px 0 64px;
+}
+
+.books-heading {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.book-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent-soft-border);
+}
+
+.book-cover {
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-cover-1 {
+  background: linear-gradient(135deg, #ddf4ff, #b6e3ff);
+}
+
+.book-cover-2 {
+  background: linear-gradient(135deg, #ecfdf5, #a7f3d0);
+}
+
+.book-cover-3 {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+}
+
+.book-cover-4 {
+  background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+}
+
+.book-cover-5 {
+  background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+}
+
+.book-emoji {
+  font-size: 44px;
+  line-height: 1;
+}
+
+.book-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px 20px;
+}
+
+.book-title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.book-author {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.book-desc {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #3f3f46;
+  line-height: 1.7;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.book-footer {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.book-price {
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  border: 1px solid var(--accent-soft-border);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
 /* ---------------- 响应式适配 ---------------- */
 
 @media (max-width: 920px) {
@@ -1195,6 +1307,10 @@ a.tag:hover {
   }
 
   .featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .book-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1221,6 +1337,10 @@ a.tag:hover {
   }
 
   .featured-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .book-grid {
     grid-template-columns: 1fr;
   }
 
