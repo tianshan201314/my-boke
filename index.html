@@ -30,19 +30,44 @@
   <main>
     <!-- Hero -->
     <section class="hero">
-      <div class="container">
-        <img class="hero-avatar" src="images/avatar.svg" alt="林默的头像">
-        <h1>你好，我是林默</h1>
-        <p class="hero-lead">写代码，也写点技术笔记</p>
-        <p class="hero-desc">一个热爱前端开发的工程师。在这里分享 JavaScript、前端工程化与性能优化的思考与踩坑记录，也聊聊书单、天气和生活的碎片，把复杂的技术讲清楚。</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="articles.html">查看文章</a>
-          <a class="btn btn-ghost" href="about.html">关于我</a>
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <img class="hero-avatar" src="images/avatar.svg" alt="林默的头像">
+          <h1>你好，我是林默</h1>
+          <p class="hero-lead">写代码，也写点技术笔记</p>
+          <p class="hero-desc">一个热爱前端开发的工程师。在这里分享 JavaScript、前端工程化与性能优化的思考与踩坑记录，也聊聊书单、天气和生活的碎片，把复杂的技术讲清楚。</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="articles.html">查看文章</a>
+            <a class="btn btn-ghost" href="about.html">关于我</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat"><b id="stat-posts">6</b><span>篇文章</span></div>
+            <div class="hero-stat"><b id="stat-cats">4</b><span>个分类</span></div>
+            <div class="hero-stat"><b>2026</b><span>建站年份</span></div>
+          </div>
         </div>
-        <div class="hero-stats">
-          <div class="hero-stat"><b id="stat-posts">6</b><span>篇文章</span></div>
-          <div class="hero-stat"><b id="stat-cats">4</b><span>个分类</span></div>
-          <div class="hero-stat"><b>2026</b><span>建站年份</span></div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="code-window">
+            <div class="code-window-bar">
+              <span class="dot-red"></span>
+              <span class="dot-yellow"></span>
+              <span class="dot-green"></span>
+              <em>hello.js</em>
+            </div>
+            <pre class="code-window-body"><code><span class="c-comment">// 保持好奇，持续输出</span>
+<span class="c-keyword">const</span> developer = {
+  name: <span class="c-string">'林默'</span>,
+  stack: [<span class="c-string">'Vue'</span>, <span class="c-string">'React'</span>, <span class="c-string">'Node'</span>],
+  blog: <span class="c-string">'DevLog'</span>,
+  motto: <span class="c-string">'把复杂讲清楚'</span>
+};
+
+<span class="c-keyword">while</span> (writing) {
+  learn();
+  share();
+}<span class="cursor"></span></code></pre>
+          </div>
+          <span class="hero-chip"><i class="pulse-dot"></i>在线 · 持续更新中</span>
         </div>
       </div>
     </section>

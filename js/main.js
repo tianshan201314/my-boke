@@ -374,6 +374,7 @@ function renderPostCard(post) {
         </div>
         <h2 class="card-title"><a href="article.html?id=${post.id}">${escapeHtml(post.title)}</a></h2>
         <p class="card-summary">${escapeHtml(post.summary)}</p>
+        <span class="card-more">阅读全文 →</span>
       </div>
     </article>`;
 }
@@ -768,6 +769,28 @@ document.addEventListener('click', (event) => {
   if (event.target.closest('#clear-order')) {
     order.clear();
     updateOrder();
+  }
+
+  if (event.target.closest('#submit-order')) {
+    const toast = document.getElementById('order-toast');
+    if (!toast) return;
+    const items = [...order.entries()];
+    let total = 0;
+    items.forEach(([id, qty]) => {
+      const dish = MENU.find((d) => d.id === id);
+      if (dish) total += dish.price * qty;
+    });
+    const count = items.reduce((sum, [, qty]) => sum + qty, 0);
+    toast.textContent = items.length
+      ? `订单提交成功！共 ${count} 份菜品，合计 ¥${total}`
+      : '请先添加菜品，再提交订单';
+    toast.hidden = false;
+    requestAnimationFrame(() => toast.classList.add('show'));
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => { toast.hidden = true; }, 350);
+    }, 2600);
   }
 });
 
