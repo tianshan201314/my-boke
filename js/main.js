@@ -801,10 +801,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const header = document.querySelector('.site-header');
   const backToTop = document.getElementById('back-to-top');
+  const scrollProgress = document.createElement('div');
+  scrollProgress.className = 'scroll-progress';
+  document.body.prepend(scrollProgress);
+
   if (header || backToTop) {
     const onScroll = () => {
       if (header) header.classList.toggle('scrolled', window.scrollY > 4);
       if (backToTop) backToTop.classList.toggle('visible', window.scrollY > window.innerHeight);
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      scrollProgress.style.width = maxScroll > 0 ? `${(window.scrollY / maxScroll) * 100}%` : '0%';
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });

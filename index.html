@@ -30,6 +30,17 @@
   <main>
     <!-- Hero -->
     <section class="hero">
+      <div class="hero-space" aria-hidden="true">
+        <span class="star s1"></span>
+        <span class="star s2"></span>
+        <span class="star s3"></span>
+        <span class="star s4"></span>
+        <span class="star s5"></span>
+        <span class="star s6"></span>
+        <span class="planet"><i class="planet-ring"></i></span>
+        <span class="astro">🧑‍🚀</span>
+        <span class="rocket">🚀</span>
+      </div>
       <div class="container hero-inner">
         <div class="hero-text">
           <img class="hero-avatar" src="images/avatar.svg" alt="林默的头像">
@@ -70,11 +81,14 @@
           <span class="hero-chip"><i class="pulse-dot"></i>在线 · 持续更新中</span>
         </div>
       </div>
+      <a class="hero-scroll" href="#weather" aria-label="向下滚动">
+        <span class="mouse"><i></i></span>
+      </a>
     </section>
 
     <div class="container home-main">
       <!-- 天气预报 -->
-      <section class="home-section weather-section" data-reveal>
+      <section class="home-section weather-section" id="weather" data-reveal>
         <div class="home-section-head">
           <h2>天气预报</h2>
           <p class="sub">未来 5 天 · 模拟数据</p>
